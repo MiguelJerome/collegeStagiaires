@@ -101,16 +101,27 @@ namespace Stagiaires_College
 
             this.ListeViewProgrammes.ItemsSource = programmes;
             this.ListeViewStagiaires.ItemsSource = stagiaires;
-            this.ListViewProgrammeConsulter.ItemsSource = stagiaires;
+            this.ListViewProgrammeConsulter.ItemsSource = programmes;
         }
 
         // les boutons pour les Programmes
         private void ajouter_Programme_Click(object sender, RoutedEventArgs e)
         {
-            int idProgramme = int.Parse(idProgrammesTextbox.Text);
-            string nomProgramme = nomProgrammeTextbox.Text;
-            int dureeEnMois = int.Parse(dureeProgrammeTextbox.Text);
-            programmes.Add(new Programme(idProgramme, nomProgramme , dureeEnMois));
+            try
+            {
+                
+                int idProgramme = int.Parse(idProgrammesTextbox.Text);
+                
+
+                string nomProgramme = nomProgrammeTextbox.Text;
+                int dureeEnMois = int.Parse(dureeProgrammeTextbox.Text);
+                programmes.Add(new Programme(idProgramme, nomProgramme, dureeEnMois));
+            }
+            catch (Exception ex)
+            {
+                
+            }
+
             effacer_Programme_Formulaire();
 
         }
@@ -136,11 +147,20 @@ namespace Stagiaires_College
         }
         private void ajouter_Stagiaire_Click(object sender, RoutedEventArgs e)
         {
-            int idStagiaire = int.Parse(idStagiareTextbox.Text);
-            string nomStagiaire = nomStagiaireTextbox.Text;
-            string prenomStagiaire = prenomStagiaireTextbox.Text;
-            int dateNaissance = int.Parse(dateNaissanceTextbox.Text);
-            stagiaires.Add(new Stagiaire(idStagiaire, nomStagiaire, prenomStagiaire, dateNaissance));
+            try
+            {
+
+                int idStagiaire = int.Parse(idStagiareTextbox.Text);
+                string nomStagiaire = nomStagiaireTextbox.Text;
+                string prenomStagiaire = prenomStagiaireTextbox.Text;
+                int dateNaissance = int.Parse(dateNaissanceTextbox.Text);
+                stagiaires.Add(new Stagiaire(idStagiaire, nomStagiaire, prenomStagiaire, dateNaissance));
+            }
+            catch (Exception ex)
+            {
+
+            }
+
             effacer_Stagiaire_Formulaire();
         }
 

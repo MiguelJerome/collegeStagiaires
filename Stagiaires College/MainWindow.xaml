@@ -19,7 +19,7 @@
                         <ColumnDefinition Width="148*"/>
                     </Grid.ColumnDefinitions>
                     <Label x:Name="idProgrammeLabel" 
-                                        Content="Numéro Du Programme:"
+                           Content="Numéro Du Programme:"
                                         HorizontalAlignment="Left" 
                                         Margin="67,72,0,0" 
                                         VerticalAlignment="Top" 
@@ -27,7 +27,8 @@
                                         FontSize="22" 
                                         Height="40" 
                                         Grid.ColumnSpan="3"/>
-                    <TextBox x:Name="idProgrammesTextbox" 
+                    <TextBox x:Name="idProgrammesTextbox"
+
                              Foreground="Gray" 
                              Text="{Binding Path=Text}" 
                              HorizontalAlignment="Left" 
@@ -46,6 +47,7 @@
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
+
                     <Label x:Name="nomProgrammeLabel" 
                                         Content="Nom Du Programme:" 
                                         HorizontalAlignment="Left" 
@@ -231,28 +233,28 @@
                            Width="333" 
                            FontSize="22" 
                            Height="40"/>
-                   
-
-                    <Button x:Name="ajouterStagiaire" 
-                            Content="Ajouter Stagiaire" 
-                            HorizontalAlignment="Center" 
-                            Margin="0,750,0,0" 
-                            VerticalAlignment="Top" 
-                            Height="35" 
-                            Width="760" 
-                            FontSize="22" 
-                            RenderTransformOrigin="0.498,6.374"
-                            Click="ajouter_Stagiaire_Click"/>
                     <Button x:Name="effacerStagiaire" 
                             Content="Effacer Stagiaire" 
                             HorizontalAlignment="Center" 
-                            Margin="0,700,0,0" 
+                            Margin="0,670,0,0" 
                             VerticalAlignment="Top" 
                             Height="35" 
                             Width="760" 
                             FontSize="22" 
                             RenderTransformOrigin="0.498,6.374"
                             Click ="effacer_Stagiaire_Click"/>
+
+                    <Button x:Name="ajouterStagiaire" 
+                            Content="Ajouter Stagiaire" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,710,0,0" 
+                            VerticalAlignment="Top" 
+                            Height="35" 
+                            Width="760" 
+                            FontSize="22" 
+                            RenderTransformOrigin="0.498,6.374"
+                            Click="ajouter_Stagiaire_Click"/>
+                    
 
                     <ListView Margin="67,303,67,124" 
                               FontSize="22" 
@@ -261,13 +263,13 @@
                             <GridView>
                                 <GridViewColumn Header="Numero Cours" 
                                                 DisplayMemberBinding="{Binding id}"  
-                                                Width="337"/>
+                                                Width="240"/>
                                 <GridViewColumn Header="Nom" 
                                                 DisplayMemberBinding="{Binding nom}"  
-                                                Width="337"/>
+                                                Width="240"/>
                                 <GridViewColumn Header="Duree En Mois" 
                                                 DisplayMemberBinding="{Binding dureeEnMois}" 
-                                                Width="337"/>
+                                                Width="200"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -280,18 +282,35 @@
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
-
                     </Grid.ColumnDefinitions>
+
                     <ListView x:Name="ListViewProgrammeConsulter" 
                               Margin="34,47,0,459">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Choix du programme" 
-                                                Width="Auto"/>
+                                <GridViewColumn Header="Numero Cours" 
+                                                DisplayMemberBinding="{Binding id}"  
+                                                Width="302"/>
+                                <GridViewColumn Header="Nom" 
+                                                DisplayMemberBinding="{Binding nom}"  
+                                                Width="302"/>
+                                <GridViewColumn Header="Duree En Mois" 
+                                                DisplayMemberBinding="{Binding dureeEnMois}" 
+                                                Width="210"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ListView  Margin="34,238,0,92" 
+
+                    <Label Content="Liste des stagiaires:" 
+                           HorizontalAlignment="Left" 
+                           Margin="34,320,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="333" 
+                           FontSize="22" 
+                           Height="40" 
+                           Grid.ColumnSpan="2"/>
+
+                    <ListView  Margin="34,378,0,92" 
                                HorizontalAlignment="Left" 
                                Grid.ColumnSpan="2" 
                                Width="826" 
@@ -299,24 +318,17 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Numero Cours" DisplayMemberBinding="{Binding id}"
-                                                Width="337"/>
+                                                Width="200"/>
                                 <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding nom}"  
-                                                Width="337"/>
+                                                Width="200"/>
                                 <GridViewColumn Header="Prenom" DisplayMemberBinding="{Binding prenom}" 
-                                                Width="337"/>
+                                                Width="200"/>
                                 <GridViewColumn Header="Sexe" DisplayMemberBinding="{Binding sexe}" 
-                                                Width="337"/>
+                                                Width="200"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Label Content="Liste des stagiaires:" 
-                           HorizontalAlignment="Left" 
-                           Margin="34,180,0,0" 
-                           VerticalAlignment="Top" 
-                           Width="333" 
-                           FontSize="22" 
-                           Height="40" 
-                           Grid.ColumnSpan="2"/>
+                    
                 </Grid>
             </TabItem>
         </TabControl>
