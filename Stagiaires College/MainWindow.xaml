@@ -5,80 +5,269 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Stagiaires_College"
         mc:Ignorable="d"
-        Title="MainWindow" Height="850" Width="900">
+        Title="MainWindow" 
+        Height="850" 
+        Width="900">
     <Grid>
         <TabControl>
-            <TabItem Header="Programmes" Margin="-2,-2,-19,0">
+            <TabItem Header="Programmes" 
+                     Margin="-2,-2,-19,0">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="30*"/>
                         <ColumnDefinition/>
                         <ColumnDefinition Width="148*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="Numéro Du Programme:" HorizontalAlignment="Left" Margin="67,72,0,0" VerticalAlignment="Top" Width="333" FontSize="22" Height="40" Grid.ColumnSpan="3"/>
-                    <TextBox x:Name="ID_Programmes" Foreground="Gray" Text="ID Programme" HorizontalAlignment="Left" Margin="250,78,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="422" Height="28" FontSize="22" TextDecorations="{x:Null}" FontWeight="Normal" FontStyle="Italic" Visibility="Visible" Grid.Column="2">
+                    <Label x:Name="idProgrammeLabel" 
+                                        Content="Numéro Du Programme:"
+                                        HorizontalAlignment="Left" 
+                                        Margin="67,72,0,0" 
+                                        VerticalAlignment="Top" 
+                                        Width="333" 
+                                        FontSize="22" 
+                                        Height="40" 
+                                        Grid.ColumnSpan="3"/>
+                    <TextBox x:Name="idProgrammesTextbox" 
+                             Foreground="Gray" 
+                             Text="{Binding Path=Text}" 
+                             HorizontalAlignment="Left" 
+                             Margin="250,78,0,0" 
+                             TextWrapping="Wrap"  
+                             VerticalAlignment="Top" 
+                             Width="422" 
+                             Height="28" 
+                             FontSize="22" 
+                             TextDecorations="{x:Null}" 
+                             FontWeight="Normal" 
+                             FontStyle="Italic" 
+                             Visibility="Visible" 
+                             Grid.Column="2">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
-                    <Label Content="Nom Du Programme:" HorizontalAlignment="Left" Margin="67,112,0,0" VerticalAlignment="Top" Width="333" FontSize="22" Height="40" Grid.ColumnSpan="3"/>
+                    <Label x:Name="nomProgrammeLabel" 
+                                        Content="Nom Du Programme:" 
+                                        HorizontalAlignment="Left" 
+                                        Margin="67,112,0,0" 
+                                        VerticalAlignment="Top" 
+                                        Width="333" 
+                                        FontSize="22" 
+                                        Height="40" 
+                                        Grid.ColumnSpan="3"/>
                     
-                    <TextBox x:Name="nom_Programme_text_box" Foreground="Gray" Text="Nom_Programme" HorizontalAlignment="Left" Margin="250,114,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="422" Height="28" FontSize="22" TextDecorations="{x:Null}" FontWeight="Normal" FontStyle="Italic" Visibility="Visible" Grid.Column="2">
+                    <TextBox x:Name="nomProgrammeTextbox" 
+                             Foreground="Gray" 
+                             Text="{Binding Path=Text}" 
+                             HorizontalAlignment="Left" 
+                             Margin="250,114,0,0" 
+                             TextWrapping="Wrap"  
+                             VerticalAlignment="Top" 
+                             Width="422" 
+                             Height="28" 
+                             FontSize="22" 
+                             TextDecorations="{x:Null}" 
+                             FontWeight="Normal" 
+                             FontStyle="Italic" 
+                             Visibility="Visible" 
+                             Grid.Column="2">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
-                    <Label Content="Durée Du Programme:" HorizontalAlignment="Left" Margin="67,152,0,0" VerticalAlignment="Top" Width="333" FontSize="22" Height="40" Grid.ColumnSpan="3"/>
-                    <TextBox x:Name="duree_programme_label" Foreground="Gray" Text="Duree Programme" HorizontalAlignment="Left" Margin="250,157,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="422" Height="28" FontSize="22" TextDecorations="{x:Null}" FontWeight="Normal" FontStyle="Italic" Visibility="Visible" Grid.Column="2">
+                    <Label x:Name="dureeProgrammeLabel" 
+                                        Content="Durée Du Programme:" 
+                                        HorizontalAlignment="Left" 
+                                        Margin="67,152,0,0" 
+                                        VerticalAlignment="Top" 
+                                        Width="333" 
+                                        FontSize="22" 
+                                        Height="40" 
+                                        Grid.ColumnSpan="3"/>
+                    <TextBox x:Name="dureeProgrammeTextbox" 
+                             Foreground="Gray" 
+                             Text="{Binding Path=Text}" 
+                             HorizontalAlignment="Left" 
+                             Margin="250,157,0,0" 
+                             TextWrapping="Wrap"  
+                             VerticalAlignment="Top" 
+                             Width="422" 
+                             Height="28" 
+                             FontSize="22" 
+                             TextDecorations="{x:Null}" 
+                             FontWeight="Normal" 
+                             FontStyle="Italic" 
+                             Visibility="Visible" 
+                             Grid.Column="2">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
 
-                    <Button x:Name="Reset_Program" Content="Reset" HorizontalAlignment="Left" Margin="67,263,0,0" VerticalAlignment="Top" Height="35" Width="760" FontSize="22" Grid.ColumnSpan="3"/>
-                    <Button x:Name="Add_Program" Content="Ajouter Programme" HorizontalAlignment="Left" Margin="67,303,0,0" VerticalAlignment="Top" Height="35" Width="760" FontSize="22" Grid.ColumnSpan="3"/>
+                    <Button x:Name="ajouterProgramme" 
+                                         Content="Ajouter Programme" 
+                                         HorizontalAlignment="Left" 
+                                         Margin="67,303,0,0" 
+                                         VerticalAlignment="Top" 
+                                         Height="35" 
+                                         Width="760" 
+                                         FontSize="22" 
+                                         Grid.ColumnSpan="3"
+                                         Click ="ajouter_Programme_Click"/>
+                    <Button x:Name="effacerProgramme" 
+                                        Content="Effacer Programme" 
+                                        HorizontalAlignment="Left" 
+                                        Margin="67,263,0,0" 
+                                        VerticalAlignment="Top" 
+                                        Height="35" 
+                                        Width="760" 
+                                        FontSize="22" 
+                                        Grid.ColumnSpan="3"
+                                        Click="effacer_Programme_Click"/>
+                    
                 </Grid>
             </TabItem>
-            <TabItem Header="Stagiaires" Margin="18,-2,-63,0">
+            <TabItem Header="Stagiaires" 
+                     Margin="18,-2,-63,0">
                 <Grid Background="#FFE5E5E5">
-                    <Label Content="Numéro D'étudiant:" HorizontalAlignment="Left" Margin="67,72,0,0" VerticalAlignment="Top" Width="333" FontSize="22" Height="40"/>
-                    <TextBox x:Name="ID_Programmes_Copy1" HorizontalAlignment="Left" Margin="405,78,0,0" TextWrapping="Wrap" Text="ID Programme"  VerticalAlignment="Top" Width="422" Height="28" FontSize="22" TextDecorations="{x:Null}" FontWeight="Normal" FontStyle="Italic">
+                    <Label Content="Numéro D'étudiant:" 
+                           HorizontalAlignment="Left" 
+                           Margin="67,72,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="333" 
+                           FontSize="22" 
+                           Height="40"/>
+                    <TextBox x:Name="idStagiareTextbox" 
+                             HorizontalAlignment="Left" 
+                             Margin="405,78,0,0" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Top" 
+                             Width="422" 
+                             Height="28" 
+                             FontSize="22" 
+                             TextDecorations="{x:Null}" 
+                             FontWeight="Normal" 
+                             FontStyle="Italic">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
 
-                    <Label Content="Nom De l'étudiant:" HorizontalAlignment="Left" Margin="67,112,0,0" VerticalAlignment="Top" Width="333" FontSize="22" Height="40"/>
-                    <TextBox x:Name="ID_Programmes_Copy2" HorizontalAlignment="Left" Margin="405,118,0,0" TextWrapping="Wrap" Text="Nom Étudiant" VerticalAlignment="Top" Width="422" Height="28" FontSize="22" TextDecorations="{x:Null}" FontWeight="Normal" FontStyle="Italic">
+                    <Label Content="Nom De l'étudiant:" 
+                           HorizontalAlignment="Left" 
+                           Margin="67,112,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="333" 
+                           FontSize="22" 
+                           Height="40"/>
+                    <TextBox x:Name="nomStagiaireTextbox" 
+                             HorizontalAlignment="Left" 
+                             Margin="405,118,0,0" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Top" 
+                             Width="422" 
+                             Height="28" 
+                             FontSize="22" 
+                             TextDecorations="{x:Null}" 
+                             FontWeight="Normal" 
+                             FontStyle="Italic">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
 
-                    <Label Content="Prénom De l'étudiant:" HorizontalAlignment="Left" Margin="67,152,0,0" VerticalAlignment="Top" Width="333" FontSize="22" Height="40"/>
-                    <TextBox x:Name="ID_Programmes_Copy3" HorizontalAlignment="Left" Margin="405,158,0,0" TextWrapping="Wrap" Text="Prénom Étudiant" VerticalAlignment="Top" Width="422" Height="28" FontSize="22" TextDecorations="{x:Null}" FontWeight="Normal" FontStyle="Normal" Visibility="Visible">
+                    <Label Content="Prénom De l'étudiant:" 
+                           HorizontalAlignment="Left" 
+                           Margin="67,152,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="333" 
+                           FontSize="22" 
+                           Height="40"/>
+                    <TextBox x:Name="prenomStagiaireTextbox" 
+                             HorizontalAlignment="Left" 
+                             Margin="405,158,0,0" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Top" 
+                             Width="422" 
+                             Height="28" 
+                             FontSize="22" 
+                             TextDecorations="{x:Null}" 
+                             FontWeight="Normal" 
+                             FontStyle="Normal" 
+                             Visibility="Visible">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
 
-                    <Label Content="Date De Naissance:" HorizontalAlignment="Left" Margin="67,191,0,0" VerticalAlignment="Top" Width="333" FontSize="22" Height="40"/>
-                    <TextBox x:Name="date_Naissance_text_box" HorizontalAlignment="Left" Margin="405,196,0,0" TextWrapping="Wrap" Text="Date Naissance" VerticalAlignment="Top" Width="422" Height="28" FontSize="22" TextDecorations="{x:Null}" FontWeight="Normal" FontStyle="Normal" Visibility="Visible">
+                    <Label Content="Date De Naissance:"
+                           HorizontalAlignment="Left" 
+                           Margin="67,191,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="333" 
+                           FontSize="22" 
+                           Height="40"/>
+                    <TextBox x:Name="dateNaissanceTextbox" 
+                             HorizontalAlignment="Left" 
+                             Margin="405,196,0,0" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Top" 
+                             Width="422" 
+                             Height="28" 
+                             FontSize="22" 
+                             TextDecorations="{x:Null}" 
+                             FontWeight="Normal" 
+                             FontStyle="Normal" 
+                             Visibility="Visible">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>
                     </TextBox>
 
-                    <Label Content="Sexe De L'étudiant:" HorizontalAlignment="Left" Margin="67,231,0,0" VerticalAlignment="Top" Width="333" FontSize="22" Height="40"/>
+                    <Label Content="Sexe De L'étudiant:" 
+                           HorizontalAlignment="Left" 
+                           Margin="67,231,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="333" 
+                           FontSize="22" 
+                           Height="40"/>
                    
 
-                    <Button x:Name="Add_Program_Copy" Content="Ajouter Stagiaire" HorizontalAlignment="Center" Margin="0,750,0,0" VerticalAlignment="Top" Height="35" Width="760" FontSize="22" RenderTransformOrigin="0.498,6.374"/>
-                    <Button x:Name="Reset_stagiaire_form" Content="Reset" HorizontalAlignment="Center" Margin="0,700,0,0" VerticalAlignment="Top" Height="35" Width="760" FontSize="22" RenderTransformOrigin="0.498,6.374"/>
+                    <Button x:Name="ajouterStagiaire" 
+                            Content="Ajouter Stagiaire" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,750,0,0" 
+                            VerticalAlignment="Top" 
+                            Height="35" 
+                            Width="760" 
+                            FontSize="22" 
+                            RenderTransformOrigin="0.498,6.374"
+                            Click="ajouter_Stagiaire_Click"/>
+                    <Button x:Name="effacerStagiaire" 
+                            Content="Effacer Stagiaire" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,700,0,0" 
+                            VerticalAlignment="Top" 
+                            Height="35" 
+                            Width="760" 
+                            FontSize="22" 
+                            RenderTransformOrigin="0.498,6.374"
+                            Click ="effacer_Stagiaire_Click"/>
 
-                    <ListView Margin="67,303,67,124" FontSize="22" x:Name="ListeViewProgrammes">
+                    <ListView Margin="67,303,67,124" 
+                              FontSize="22" 
+                              x:Name="ListeViewProgrammes">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Choix du programme"  Width="337"/>
+                                <GridViewColumn Header="Numero Cours" 
+                                                DisplayMemberBinding="{Binding id}"  
+                                                Width="337"/>
+                                <GridViewColumn Header="Nom" 
+                                                DisplayMemberBinding="{Binding nom}"  
+                                                Width="337"/>
+                                <GridViewColumn Header="Duree En Mois" 
+                                                DisplayMemberBinding="{Binding dureeEnMois}" 
+                                                Width="337"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -86,37 +275,57 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Consulter" Margin="63,-1,-96,-1">
+            <TabItem Header="Consulter" 
+                     Margin="63,-1,-96,-1">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
 
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="ListViewProgrammeConsulter" Margin="34,47,0,459">
+                    <ListView x:Name="ListViewProgrammeConsulter" 
+                              Margin="34,47,0,459">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Choix du programme"  Width="Auto"/>
+                                <GridViewColumn Header="Choix du programme" 
+                                                Width="Auto"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ListView  Margin="34,238,0,92" HorizontalAlignment="Left" Grid.ColumnSpan="2" Width="826" x:Name="ListeViewStagiaires">
+                    <ListView  Margin="34,238,0,92" 
+                               HorizontalAlignment="Left" 
+                               Grid.ColumnSpan="2" 
+                               Width="826" 
+                               x:Name="ListeViewStagiaires">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="No Etudiant" Width="Auto"/>
-                                <GridViewColumn Header="Nom" Width="50"/>
-                                <GridViewColumn Header="Prenom" Width="50"/>
-                                <GridViewColumn Header="Age" Width="50"/>
-                                <GridViewColumn Header="Sexe" Width="Auto"/>
+                                <GridViewColumn Header="Numero Cours" DisplayMemberBinding="{Binding id}"
+                                                Width="337"/>
+                                <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding nom}"  
+                                                Width="337"/>
+                                <GridViewColumn Header="Prenom" DisplayMemberBinding="{Binding prenom}" 
+                                                Width="337"/>
+                                <GridViewColumn Header="Sexe" DisplayMemberBinding="{Binding sexe}" 
+                                                Width="337"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Label Content="Liste des stagiaires:" HorizontalAlignment="Left" Margin="34,180,0,0" VerticalAlignment="Top" Width="333" FontSize="22" Height="40" Grid.ColumnSpan="2"/>
+                    <Label Content="Liste des stagiaires:" 
+                           HorizontalAlignment="Left" 
+                           Margin="34,180,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="333" 
+                           FontSize="22" 
+                           Height="40" 
+                           Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
         </TabControl>
 
 
-        <ComboBox HorizontalAlignment="Left" Margin="188,-41,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox HorizontalAlignment="Left" 
+                  Margin="188,-41,0,0" 
+                  VerticalAlignment="Top" 
+                  Width="120"/>
 
     </Grid>
 </Window>

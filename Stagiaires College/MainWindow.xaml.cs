@@ -48,15 +48,18 @@ namespace Stagiaires_College
 
         public string prenom { get; set; } // string letters only
 
+        public int dateNaissance { get; set; } // string letters only
         public bool sexe { get; set; } // only female, only male
         //          public int programme_id { get; set; }
 
-        public Stagiaire(int id, string nom, string prenom)
+        public Stagiaire(int id, string nom, string prenom, int dateNaissance)
         {
             this.id = id;
             this.nom = nom;
             this.prenom = prenom;
-         //   this.sexe = sexe;
+            this.dateNaissance = dateNaissance;
+            this.dateNaissance = dateNaissance;
+            //   this.sexe = sexe;
             //     this.programme_id = programme_id;
 
         }
@@ -68,37 +71,82 @@ namespace Stagiaires_College
 
     }
 
+  
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+     
         private ObservableCollection<Programme> programmes = new ObservableCollection<Programme>();
-
         private ObservableCollection<Stagiaire> stagiaires = new ObservableCollection<Stagiaire>();
 
         public MainWindow()
         {
             InitializeComponent();
 
+            DataContext = this.ajouterProgramme;
+            DataContext = this.effacerProgramme;
+            DataContext = this.ajouterStagiaire;
+            DataContext = this.effacerStagiaire;
+
             programmes.Add(new Programme(2001, "Math", 60));
             programmes.Add(new Programme(2001, "English", 60));
             programmes.Add(new Programme(2001, "Spanish", 60));
-            stagiaires.Add(new Stagiaire(2001111, "Papa", "Mama"));
-            stagiaires.Add(new Stagiaire(2001111, "sister", "brother"));
+
+            stagiaires.Add(new Stagiaire(5000, "Jerome", "Miguel", 28));
+            stagiaires.Add(new Stagiaire(5001, "Igondjo", "Synn", 55));
+
 
             this.ListeViewProgrammes.ItemsSource = programmes;
             this.ListeViewStagiaires.ItemsSource = stagiaires;
-
             this.ListViewProgrammeConsulter.ItemsSource = stagiaires;
+        }
 
+        // les boutons pour les Programmes
+        private void ajouter_Programme_Click(object sender, RoutedEventArgs e)
+        {
+            int idProgramme = int.Parse(idProgrammesTextbox.Text);
+            string nomProgramme = nomProgrammeTextbox.Text;
+            int dureeEnMois = int.Parse(dureeProgrammeTextbox.Text);
+            programmes.Add(new Programme(idProgramme, nomProgramme , dureeEnMois));
+            effacer_Programme_Formulaire();
 
         }
+        private void effacer_Programme_Click(object sender, RoutedEventArgs e)
+        {
+            effacer_Programme_Formulaire();
+        }
+
+        private void effacer_Programme_Formulaire()
+        {
+            idProgrammesTextbox.Text = string.Empty; ;
+            nomProgrammeTextbox.Text = string.Empty; ;
+            dureeProgrammeTextbox.Text = string.Empty;
+        }
+
+        // les boutons pour les Stagiaires
+        private void effacer_Stagiaire_Formulaire()
+        {
+            idStagiareTextbox.Text = string.Empty;
+            nomStagiaireTextbox.Text = string.Empty;
+            prenomStagiaireTextbox.Text = string.Empty;
+            dateNaissanceTextbox.Text = string.Empty;
+        }
+        private void ajouter_Stagiaire_Click(object sender, RoutedEventArgs e)
+        {
+            int idStagiaire = int.Parse(idStagiareTextbox.Text);
+            string nomStagiaire = nomStagiaireTextbox.Text;
+            string prenomStagiaire = prenomStagiaireTextbox.Text;
+            int dateNaissance = int.Parse(dateNaissanceTextbox.Text);
+            stagiaires.Add(new Stagiaire(idStagiaire, nomStagiaire, prenomStagiaire, dateNaissance));
+            effacer_Stagiaire_Formulaire();
+        }
+
+        private void effacer_Stagiaire_Click(object sender, RoutedEventArgs e)
+        {
+            effacer_Stagiaire_Formulaire();
+        }
     }
-
-
-
-
-
-
 }
