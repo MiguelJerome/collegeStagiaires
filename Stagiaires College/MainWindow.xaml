@@ -209,7 +209,7 @@
                     </TextBox>
 
                     <Label x:Name="dateNaissanceLabel"
-                           Content="Date De Naissance:(MM/dd/yyyy)*"
+                           Content="Date De Naissance:(dd/mm/yyyy)*"
                            HorizontalAlignment="Left" 
                            Margin="67,191,0,0" 
                            VerticalAlignment="Top" 
@@ -227,7 +227,7 @@
                              TextDecorations="{x:Null}" 
                              FontWeight="Normal" 
                              FontStyle="Normal" 
-                             Visibility="Visible" InputScope="Date">
+                             Visibility="Visible" InputScope="Default">
                         <TextBox.Effect>
                             <DropShadowEffect/>
                         </TextBox.Effect>

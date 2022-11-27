@@ -50,11 +50,11 @@ namespace Stagiaires_College
 
         public string prenom { get; set; } // string letters only
 
-        public int dateNaissance { get; set; } // string letters only
+        public string dateNaissance { get; set; } // string letters only
         public string sexe { get; set; } // only female or only male
         //          public int programme_id { get; set; }
 
-        public Stagiaire(int id, string nom, string prenom, int dateNaissance, string sexe)
+        public Stagiaire(int id, string nom, string prenom, string dateNaissance, string sexe)
         {
             this.id = id;
             this.nom = nom;
@@ -67,7 +67,7 @@ namespace Stagiaires_College
 
         public override string ToString()
         {
-            return $"{this.id} {this.nom} {this.prenom} {this.sexe}";
+            return $"{this.id} {this.nom} {this.prenom} {this.dateNaissance} {this.sexe}";
         }
 
     }
@@ -102,8 +102,8 @@ namespace Stagiaires_College
             programmes.Add(new Programme(2001, "English", 60));
             programmes.Add(new Programme(2001, "Spanish", 60));
 
-            stagiaires.Add(new Stagiaire(5000, "Jerome", "Miguel", 28, "Homme"));
-            stagiaires.Add(new Stagiaire(5001, "Igondjo", "Synn", 55, "Homme"));
+            stagiaires.Add(new Stagiaire(5000, "Jerome", "Miguel", "28/11/2022", "Homme"));
+            stagiaires.Add(new Stagiaire(5001, "Igondjo", "Synn", "28/11/2022", "Homme"));
 
             this.ListeViewProgrammes.ItemsSource = programmes;
             this.ListeViewStagiaires.ItemsSource = stagiaires;
@@ -272,7 +272,20 @@ namespace Stagiaires_College
                 /// <summary>
                 /// Verifier la validation de la date de naissance pour le formaulaire Ajouter Stagiaire
                 /// </summary>
-                int dateNaissance = int.Parse(dateNaissanceTextbox.Text);
+                string dateNaissance = dateNaissanceTextbox.Text;
+                const string ERREUR_DATE_DE_NAISSANCE_STAGIAIRE_TITLE = "Date de naissance de stagiaire erreur";
+                const string ERREUR_MESSAGE_INPUT_INVALIDE_DATE_DE_NAISSANCE_STAGIAIRE =
+                    "Invalide Date de naissance de stagiaire doit etre de format dd/mm/yyyy";
+
+                Regex regDateNaissanceStagiaire = new Regex("^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$");
+                if (!regDateNaissanceStagiaire.IsMatch(dateNaissance))
+                {
+                    MessageBox.Show(
+                        ERREUR_MESSAGE_INPUT_INVALIDE_DATE_DE_NAISSANCE_STAGIAIRE,
+                        ERREUR_DATE_DE_NAISSANCE_STAGIAIRE_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
 
                 /// <summary>
                 /// Verifier la validation du sexe pour le formaulaire Ajouter Stagiaire
@@ -288,10 +301,23 @@ namespace Stagiaires_College
                     sexe = (sexeFemmeRadioBox.IsChecked == true) ? "Femme" : String.Empty;
                 }
 
+                const string ERREUR_SEXE_STAGIAIRE_TITLE = "Sexe de stagiaire erreur";
+                const string ERREUR_MESSAGE_INPUT_INVALIDE_SEXE_STAGIAIRE =
+                    "Invalide sexe de stagiaire doit etre selectionner";
+
+                if (sexe == String.Empty)
+                {
+                    MessageBox.Show(
+                        ERREUR_MESSAGE_INPUT_INVALIDE_SEXE_STAGIAIRE,
+                        ERREUR_SEXE_STAGIAIRE_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+
                 /// <summary>
                 /// Verifier la validation de tous les inputs pour le formaulaire Ajouter Stagiaire
                 /// </summary>
-                if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaire) && regPrenomStagiaire.IsMatch(prenomStagiaire) && sexe!= String.Empty)
+                if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaire) && regPrenomStagiaire.IsMatch(prenomStagiaire) && regDateNaissanceStagiaire.IsMatch(dateNaissance) && sexe!= String.Empty)
                 {
                     stagiaires.Add(new Stagiaire(idStagiaire, nomStagiaire, prenomStagiaire, dateNaissance, sexe));
                     effacer_Stagiaire_Formulaire();
