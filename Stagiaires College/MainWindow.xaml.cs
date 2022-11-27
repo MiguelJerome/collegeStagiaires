@@ -21,6 +21,9 @@ namespace Stagiaires_College
     using System.Security.Cryptography.X509Certificates;
     using System.Text.RegularExpressions;
 
+    /// <summary>
+    /// voici la classe Programme qui contient les attribut id, nom, dureeEnMois 
+    /// </summary>
     public class Programme
     {
         public int id { get; set; }
@@ -42,6 +45,9 @@ namespace Stagiaires_College
         }
     }
 
+    /// <summary>
+    /// voici la classe Stagiaire qui contient les attribut id, nom, prenom, date, Naissance, sexe 
+    /// </summary>
     public class Stagiaire
     {
         public int id { get; set; } // 7 chiffres only
@@ -77,13 +83,22 @@ namespace Stagiaires_College
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        /// <summary>
+        /// erreur message attraper par les try ...  catch utiliser globalement a travers du programme
+        /// </summary>
         private string ERREUR_RECOMMANCER_FORMULAIRE = "Veuillez recommencer";
+
+        /// <summary>
+        /// creer les objets programmes et objects stagiaires pour qu'il reagissent dynamiquement
+        /// </summary>
         private ObservableCollection<Programme> programmes = new ObservableCollection<Programme>();
         private ObservableCollection<Stagiaire> stagiaires = new ObservableCollection<Stagiaire>();
 
         public MainWindow()
         {
+            /// <summary>
+            /// est une méthode qui est automatiquement créée et gérée par le concepteur Windows Forms et qui définit tout ce que vous voyez sur le formulaire
+            /// </summary>
             InitializeComponent();
 
             /// <summary>
@@ -93,36 +108,62 @@ namespace Stagiaires_College
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize;
 
-            DataContext = this.ajouterProgramme;
-            DataContext = this.effacerProgramme;
-            DataContext = this.ajouterStagiaire;
-            DataContext = this.effacerStagiaire;
-
+            /// <summary>
+            /// on bind avec DataContext avec le programmes et le stagiaires
+            /// </summary>
+            DataContext = this.programmes;
+            DataContext = this.stagiaires;
+            
+            /// <summary>
+            /// voici des data dummy ou seed data pour d objet programmes pour tester
+            /// </summary>
             programmes.Add(new Programme(2001, "Math", 60));
             programmes.Add(new Programme(2001, "English", 60));
             programmes.Add(new Programme(2001, "Spanish", 60));
 
+            /// <summary>
+            /// voici des data dummy ou seed data pour d objet stagiaire pour tester
+            /// </summary>
             stagiaires.Add(new Stagiaire(5000, "Jerome", "Miguel", "28/11/2022", "Homme"));
             stagiaires.Add(new Stagiaire(5001, "Igondjo", "Synn", "28/11/2022", "Homme"));
 
+            /// <summary>
+            /// faire le data binding pour different listeview avec les programmes et stagiaires
+            /// </summary>
             this.ListeViewProgrammes.ItemsSource = programmes;
             this.ListeViewStagiaires.ItemsSource = stagiaires;
             this.ListViewProgrammeConsulter.ItemsSource = programmes;
         }
 
-        // les boutons pour les Programmes
+        /// <summary>
+        /// ajouter toute les data entry pour le formulaire Ajouter Programme en appuyant sur le bouton effacer Programme
+        /// </summary>
         private void ajouter_Programme_Click(object sender, RoutedEventArgs e)
         {
             try
                 {
                     /// <summary>
-                     /// Verifier la validation du No du Programme pour le formaulaire Ajouter Programme
+                    /// Verifier la validation du No du Programme pour le formulaire Ajouter Programme
                     /// </summary>
+
+                    const string OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE = "Erreur Obligation Data entry ID Programme";
+                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE =
+                    "Invalide data entry pour ID Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
+                    if ((idProgrammesTextbox.Text) == string.Empty)
+                    {
+                        MessageBox.Show(
+                            ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE,
+                        OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    }
+                    
                     const string UNIQUE_NO_DE_PROGRAMME_TITLE = "No de programme erreur";
                     const string ERREUR_MESSAGE_INPUT_INVALIDE_NO_PROGRAMME =
-                    "Invalide No. de programme doit etre juste des chiffres uniquemenent entre 0000000 et 9999999 donc seulement un nombre de longueur de 7 chiffres uniquemenent";
+                        "Invalide No. de programme doit etre juste des chiffres uniquemenent entre 0000000 et 9999999 donc seulement un nombre de longueur de 7 chiffres uniquemenent";
                     int idProgramme = int.Parse(idProgrammesTextbox.Text);
-                
+
                     Regex regNoProgramme = new Regex("^([0-9]){7}$");
 
                     if (!regNoProgramme.IsMatch(idProgrammesTextbox.Text))
@@ -133,10 +174,24 @@ namespace Stagiaires_College
                             MessageBoxButton.OK,
                             MessageBoxImage.Warning);
                     }
-                        
+
                     /// <summary>
-                    /// Verifier la validation du nom du Programme pour le formaulaire Ajouter Programme
+                    /// Verifier la validation du nom du Programme pour le formulaire Ajouter Programme
                     /// </summary>
+
+                    const string OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE = "Erreur Obligation Data entry nom Programme";
+                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE =
+                        "Invalide data entry pour nom Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
+                    if ((nomProgrammeTextbox.Text) == string.Empty)
+                    {
+                        MessageBox.Show(
+                            ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE,
+                            OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                    }
+
                     string nomProgramme = nomProgrammeTextbox.Text;
                     const string ERREUR_NOM_PROGRAMME_TITLE = "Nom de programme erreur";
                     const string ERREUR_MESSAGE_INPUT_INVALIDE_NOM_PROGRAMME =
@@ -152,9 +207,23 @@ namespace Stagiaires_College
                             MessageBoxImage.Warning);
                     }
 
-                     /// <summary>
-                     /// Verifier la validation de la duree du Programme pour le formaulaire Ajouter Programme
+                    /// <summary>
+                    /// Verifier la validation de la duree du Programme pour le formulaire Ajouter Programme
                     /// </summary>
+
+                    const string OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE = "Erreur Obligation Data entry duree du Programme";
+                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE =
+                        "Invalide data entry pour la duree du Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
+                    if ((dureeProgrammeTextbox.Text) == string.Empty)
+                    {
+                        MessageBox.Show(
+                            ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE,
+                            OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                    }
+
                     const string ERREUR_DUREE_MOIS_TITLE = "Duree du programme erreur";
                     const string ERREUR_MESSAGE_INPUT_INVALIDE_DUREE_MOIS = "Invalide duree du programme doit etre juste des chiffres uniquemenent entre 1 et 60";
                     int dureeEnMois = int.Parse(dureeProgrammeTextbox.Text);
@@ -170,7 +239,7 @@ namespace Stagiaires_College
                             MessageBoxImage.Warning);
                     }
                     /// <summary>
-                    /// Verifier la validation de tous les inputs pour le formaulaire Ajouter Programme
+                    /// Verifier la validation de tous les inputs pour le formulaire Ajouter Programme
                     /// </summary>
                     if (regNoProgramme.IsMatch(idProgrammesTextbox.Text) && regNomProgramme.IsMatch(nomProgramme) && regDureeProgramme.IsMatch(dureeProgrammeTextbox.Text))
                     {
@@ -179,7 +248,7 @@ namespace Stagiaires_College
                     }
                 }
             /// <summary>
-            /// Verifier si il y a des excepction de contraites qui n'ont pas ete encore traiter pour le formaulaire Ajouter Programme
+            /// Verifier si il y a des excepction de contraites qui n'ont pas ete encore traiter pour le formulaire Ajouter Programme
             /// </summary>
             catch (Exception)
             {
@@ -188,11 +257,18 @@ namespace Stagiaires_College
                 MessageBox.Show($"{ERREUR_AJOUTER_FORMULAIRE_PROGRAMME} {ERREUR_RECOMMANCER_FORMULAIRE}", UNIQUE_AJOUTER_PROGRAMME_TITLE,MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        /// <summary>
+        /// effacer toute les data entry pour le formulaire Ajouter Programme en appuyant sur le bouton effacer Programme
+        /// </summary>
         private void effacer_Programme_Click(object sender, RoutedEventArgs e)
         {
             effacer_Programme_Formulaire();
         }
 
+        /// <summary>
+        /// effacer toute les data entry pour le formulaire Ajouter Programme
+        /// </summary>
         private void effacer_Programme_Formulaire()
         {
             idProgrammesTextbox.Text = string.Empty; 
@@ -200,23 +276,30 @@ namespace Stagiaires_College
             dureeProgrammeTextbox.Text = string.Empty;
         }
 
-        // les boutons pour les Stagiaires
-        private void effacer_Stagiaire_Formulaire()
-        {
-            idStagiareTextbox.Text = string.Empty;
-            nomStagiaireTextbox.Text = string.Empty;
-            prenomStagiaireTextbox.Text = string.Empty;
-            dateNaissanceTextbox.Text = string.Empty;
-            sexeHommeRadioBox.IsChecked = false;
-            sexeFemmeRadioBox.IsChecked = false;
-        }
+        /// <summary>
+        /// ajouter toute les data entry pour le formulaire Ajouter Stagiaire en appuyant sur le bouton effacer Stagiaire
+        /// </summary>
         private void ajouter_Stagiaire_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 /// <summary>
-                /// Verifier la validation du No du Stagiaire pour le formaulaire Ajouter Stagiaire
+                /// Verifier la validation du No du Stagiaire pour le formulaire Ajouter Stagiaire
                 /// </summary>
+
+                const string OBLIGATION_DATA_ENTRY_ID_STAGIAIRE_TITLE = "Erreur Obligation Data entry ID Stagiaire";
+                const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_STAGIAIRE =
+                    "Invalide data entry pour ID Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
+                if ((idStagiareTextbox.Text) == string.Empty)
+                {
+                    MessageBox.Show(
+                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_STAGIAIRE,
+                        OBLIGATION_DATA_ENTRY_ID_STAGIAIRE_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+
                 const string UNIQUE_NO_DE_STAGIAIRE_TITLE = "No d etudiant erreur";
                 const string ERREUR_MESSAGE_INPUT_INVALIDE_NO_STAGIAIRE =
                     "Invalide No. de stagiaire doit etre juste des chiffres uniquemenent entre 0000000 et 9999999 donc seulement un nombre de longueur de 7 chiffres uniquemenent";
@@ -234,8 +317,22 @@ namespace Stagiaires_College
                 }
 
                 /// <summary>
-                /// Verifier la validation du nom pour le formaulaire Ajouter Stagiaire
+                /// Verifier la validation du nom pour le formulaire Ajouter Stagiaire
                 /// </summary>
+
+                const string OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE_TITLE = "Erreur Obligation Data entry nom Stagiaire";
+                const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE =
+                    "Invalide data entry pour nom Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
+                if ((nomStagiaireTextbox.Text) == string.Empty)
+                {
+                    MessageBox.Show(
+                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE,
+                        OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+
                 string nomStagiaire = nomStagiaireTextbox.Text;
                 const string ERREUR_NOM_STAGIAIRE_TITLE = "Nom de stagiaire erreur";
                 const string ERREUR_MESSAGE_INPUT_INVALIDE_NOM_STAGIAIRE =
@@ -252,8 +349,22 @@ namespace Stagiaires_College
                 }
 
                 /// <summary>
-                /// Verifier la validation du prenom pour le formaulaire Ajouter Stagiaire
+                /// Verifier la validation du prenom pour le formulaire Ajouter Stagiaire
                 /// </summary>
+
+                const string OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE_TITLE = "Erreur Obligation Data entry prenom Stagiaire";
+                const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE =
+                    "Invalide data entry pour prenom Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
+                if ((prenomStagiaireTextbox.Text) == string.Empty)
+                {
+                    MessageBox.Show(
+                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE,
+                        OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+
                 string prenomStagiaire = prenomStagiaireTextbox.Text;
                 const string ERREUR_PRENOM_STAGIAIRE_TITLE = "Prenom de stagiaire erreur";
                 const string ERREUR_MESSAGE_INPUT_INVALIDE_PRENOM_STAGIAIRE =
@@ -270,8 +381,22 @@ namespace Stagiaires_College
                 }
 
                 /// <summary>
-                /// Verifier la validation de la date de naissance pour le formaulaire Ajouter Stagiaire
+                /// Verifier la validation de la date de naissance pour le formulaire Ajouter Stagiaire
                 /// </summary>
+
+                const string OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE_TITLE = "Erreur Obligation Data entry date de naissance Stagiaire";
+                const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE =
+                    "Invalide data entry pour date de naissance Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
+                if ((dateNaissanceTextbox.Text) == string.Empty)
+                {
+                    MessageBox.Show(
+                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE,
+                        OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+
                 string dateNaissance = dateNaissanceTextbox.Text;
                 const string ERREUR_DATE_DE_NAISSANCE_STAGIAIRE_TITLE = "Date de naissance de stagiaire erreur";
                 const string ERREUR_MESSAGE_INPUT_INVALIDE_DATE_DE_NAISSANCE_STAGIAIRE =
@@ -288,9 +413,11 @@ namespace Stagiaires_College
                 }
 
                 /// <summary>
-                /// Verifier la validation du sexe pour le formaulaire Ajouter Stagiaire
+                /// Verifier la validation du sexe pour le formulaire Ajouter Stagiaire
                 /// </summary>
+                
                 string sexe = String.Empty;
+                
                 if (sexeHommeRadioBox.IsChecked == true)
                 {
                     sexe = (sexeHommeRadioBox.IsChecked == true) ? "Homme" : String.Empty;
@@ -301,9 +428,9 @@ namespace Stagiaires_College
                     sexe = (sexeFemmeRadioBox.IsChecked == true) ? "Femme" : String.Empty;
                 }
 
-                const string ERREUR_SEXE_STAGIAIRE_TITLE = "Sexe de stagiaire erreur";
+                const string ERREUR_SEXE_STAGIAIRE_TITLE = "Erreur Obligation Data entry sexe Stagiaire";
                 const string ERREUR_MESSAGE_INPUT_INVALIDE_SEXE_STAGIAIRE =
-                    "Invalide sexe de stagiaire doit etre selectionner";
+                    "Invalide data entry pour sexe Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide, vous devez en selectionner un sexe";
 
                 if (sexe == String.Empty)
                 {
@@ -315,7 +442,7 @@ namespace Stagiaires_College
                 }
 
                 /// <summary>
-                /// Verifier la validation de tous les inputs pour le formaulaire Ajouter Stagiaire
+                /// Verifier la validation de tous les inputs pour le formulaire Ajouter Stagiaire
                 /// </summary>
                 if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaire) && regPrenomStagiaire.IsMatch(prenomStagiaire) && regDateNaissanceStagiaire.IsMatch(dateNaissance) && sexe!= String.Empty)
                 {
@@ -325,7 +452,7 @@ namespace Stagiaires_College
             }
 
             /// <summary>
-            /// Verifier si il y a des excepction de contraites qui n'ont pas ete encore traiter pour le formaulaire Ajouter Stagiaire
+            /// Verifier si il y a des excepction de contraites qui n'ont pas ete encore traiter pour le formulaire Ajouter Stagiaire
             /// </summary>
             catch (Exception ex)
             {
@@ -338,9 +465,25 @@ namespace Stagiaires_College
             }
         }
 
+        /// <summary>
+        /// effacer toute les data entry pour le formulaire Ajouter Stagiaire en appuyant sur le bouton effacer Stagiaire
+        /// </summary>
         private void effacer_Stagiaire_Click(object sender, RoutedEventArgs e)
         {
             effacer_Stagiaire_Formulaire();
+        }
+
+        /// <summary>
+        /// effacer toute les data entry pour le formulaire Ajouter Stagiaire
+        /// </summary>
+        private void effacer_Stagiaire_Formulaire()
+        {
+            idStagiareTextbox.Text = string.Empty;
+            nomStagiaireTextbox.Text = string.Empty;
+            prenomStagiaireTextbox.Text = string.Empty;
+            dateNaissanceTextbox.Text = string.Empty;
+            sexeHommeRadioBox.IsChecked = false;
+            sexeFemmeRadioBox.IsChecked = false;
         }
     }
 }
