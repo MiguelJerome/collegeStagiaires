@@ -112,9 +112,10 @@ namespace Stagiaires_College
             /// <summary>
             /// on bind avec DataContext avec le programmes et le stagiaires
             /// </summary>
+            DataContext = this;
             DataContext = this.programmes;
             DataContext = this.stagiaires;
-            
+
             /// <summary>
             /// voici des data dummy ou seed data pour d objet programmes pour tester
             /// </summary>
