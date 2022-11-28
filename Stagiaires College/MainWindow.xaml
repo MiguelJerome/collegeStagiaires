@@ -473,9 +473,9 @@
                                 <GridViewColumn Header="Numero Cours" DisplayMemberBinding="{Binding id}"
                                                 Width="160"/>
                                 <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding nom}"  
-                                                Width="200"/>
+                                                Width="190"/>
                                 <GridViewColumn Header="Prenom" DisplayMemberBinding="{Binding prenom}" 
-                                                Width="200"/>
+                                                Width="190"/>
                                 <GridViewColumn Header="Date de naissance" DisplayMemberBinding="{Binding dateNaissance}" 
                                                 Width="200"/>
                                 <GridViewColumn Header="Sexe" DisplayMemberBinding="{Binding sexe}" 
