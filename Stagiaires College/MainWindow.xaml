@@ -278,15 +278,13 @@
                            FontSize="22" 
                            Height="40"
                            Foreground="#FFD6B60A"/>
-                    <TextBox x:Name="dateNaissanceTextbox" 
+                    <DatePicker x:Name="dateNaissanceTextbox" 
                              HorizontalAlignment="Left" 
                              Margin="650,196,0,0" 
-                             TextWrapping="Wrap" 
                              VerticalAlignment="Top" 
                              Width="422" 
                              Height="28" 
                              FontSize="22" 
-                             TextDecorations="{x:Null}" 
                              FontWeight="Normal" 
                              FontStyle="Normal" 
                              Visibility="Visible" 
@@ -294,11 +292,8 @@
                              Background="#feabe6"
                              Foreground="black"
                              BorderBrush="#92baf4"
-                             BorderThickness =" 2">
-                        <TextBox.Effect>
-                            <DropShadowEffect/>
-                        </TextBox.Effect>
-                    </TextBox>
+                             BorderThickness =" 0">
+                    </DatePicker>
                     <!--ceci est le Label e sexe etudiant pour le formulaire ajouter Stagiaire de l'onglet Stagiaire-->
                     <Label x:Name="sexeEtudiantLabel"
                            Content="Sexe De L'étudiant:*" 

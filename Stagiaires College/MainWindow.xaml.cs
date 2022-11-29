@@ -165,32 +165,75 @@ namespace Stagiaires_College
         {
             try
                 {
-                    /// <summary>
-                    /// Verifier la validation du No du Programme pour le formulaire Ajouter Programme
-                    /// </summary>
+                    
 
-                    const string OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE = "Erreur Obligation Data entry ID Programme";
-                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE =
-                    "Invalide data entry pour ID Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+                /// <summary>
+                /// Verifier la validation si toute les TextBox sont vides
+                /// </summary>
 
-                    if ((idProgrammesTextbox.Text) == string.Empty)
+                if ((idProgrammesTextbox.Text) == string.Empty)
                     {
+                        const string OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE = "Erreur Obligation Data entry ID Programme";
+                        const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE =
+                            "Invalide data entry pour ID Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
                         MessageBox.Show(
                             ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE,
                         OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE,
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning);
                     }
-                    
-                    const string UNIQUE_NO_DE_PROGRAMME_TITLE = "No de programme erreur";
-                    const string ERREUR_MESSAGE_INPUT_INVALIDE_NO_PROGRAMME =
-                        "Invalide No. de programme doit etre juste des chiffres uniquemenent entre 0000000 et 9999999 donc seulement un nombre de longueur de 7 chiffres uniquemenent";
-                    int idProgramme = int.Parse(idProgrammesTextbox.Text);
 
-                    Regex regNoProgramme = new Regex("^([0-9]){7}$");
+                else if ((nomProgrammeTextbox.Text) == string.Empty)
+                {
+                    const string OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE = "Erreur Obligation Data entry nom Programme";
+                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE =
+                        "Invalide data entry pour nom Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
 
-                    if (!regNoProgramme.IsMatch(idProgrammesTextbox.Text))
+                    MessageBox.Show(
+                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE,
+                        OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+
+                    else if ((dureeProgrammeTextbox.Text) == string.Empty)
                     {
+                        const string OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE = "Erreur Obligation Data entry duree du Programme";
+                        const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE =
+                            "Invalide data entry pour la duree du Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
+                        MessageBox.Show(
+                            ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE,
+                            OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                    }
+
+                /// <summary>
+                /// Voici les donnees de validation a verifier pour le formulaire Ajouter Programme
+                /// </summary>
+
+                int idProgramme = int.Parse(idProgrammesTextbox.Text);
+                Regex regNoProgramme = new Regex("^([0-9]){7}$");
+
+                string nomProgramme = nomProgrammeTextbox.Text;
+                Regex regNomProgramme = new Regex("^([a-zA-Z][a-zA-Z _]*){1,25}$");
+
+                int dureeEnMois = int.Parse(dureeProgrammeTextbox.Text);
+                Regex regDureeProgramme = new Regex("^([1-9]|[1-5][0-9]|60|all)$");
+
+                /// <summary>
+                /// Verifier la validation du No du Programme pour le formulaire Ajouter Programme
+                /// </summary>
+
+                if (!regNoProgramme.IsMatch(idProgrammesTextbox.Text))
+                    {
+                        idProgramme = int.Parse(idProgrammesTextbox.Text);
+                    const string UNIQUE_NO_DE_PROGRAMME_TITLE = "No de programme erreur";
+                        const string ERREUR_MESSAGE_INPUT_INVALIDE_NO_PROGRAMME =
+                            "Invalide No. de programme doit etre juste des chiffres uniquemenent entre 0000000 et 9999999 donc seulement un nombre de longueur de 7 chiffres uniquement";
+
                         MessageBox.Show(
                             ERREUR_MESSAGE_INPUT_INVALIDE_NO_PROGRAMME,
                             UNIQUE_NO_DE_PROGRAMME_TITLE,
@@ -202,27 +245,14 @@ namespace Stagiaires_College
                     /// Verifier la validation du nom du Programme pour le formulaire Ajouter Programme
                     /// </summary>
 
-                    const string OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE = "Erreur Obligation Data entry nom Programme";
-                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE =
-                        "Invalide data entry pour nom Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
-
-                    if ((nomProgrammeTextbox.Text) == string.Empty)
-                    {
-                        MessageBox.Show(
-                            ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE,
-                            OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning);
-                    }
-
-                    string nomProgramme = nomProgrammeTextbox.Text;
-                    const string ERREUR_NOM_PROGRAMME_TITLE = "Nom de programme erreur";
-                    const string ERREUR_MESSAGE_INPUT_INVALIDE_NOM_PROGRAMME =
-                        "Invalide Nom de programme doit etre juste des lettres entre 1 et 25 characteres de longueur";
-                    Regex regNomProgramme = new Regex("^([a-zA-Z]){1,25}$");
+                   
                     
-                    if (!regNomProgramme.IsMatch(nomProgramme))
+                    else if (!regNomProgramme.IsMatch(nomProgramme))
                     {
+                        const string ERREUR_NOM_PROGRAMME_TITLE = "Nom de programme erreur";
+                        const string ERREUR_MESSAGE_INPUT_INVALIDE_NOM_PROGRAMME =
+                            "Invalide Nom de programme doit etre juste des lettres entre 1 et 25 characteres de longueur";
+
                         MessageBox.Show(
                             ERREUR_MESSAGE_INPUT_INVALIDE_NOM_PROGRAMME,
                             ERREUR_NOM_PROGRAMME_TITLE,
@@ -234,33 +264,20 @@ namespace Stagiaires_College
                     /// Verifier la validation de la duree du Programme pour le formulaire Ajouter Programme
                     /// </summary>
 
-                    const string OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE = "Erreur Obligation Data entry duree du Programme";
-                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE =
-                        "Invalide data entry pour la duree du Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+                    
 
-                    if ((dureeProgrammeTextbox.Text) == string.Empty)
+                    else if (!regDureeProgramme.IsMatch(dureeProgrammeTextbox.Text))
                     {
+                        const string ERREUR_DUREE_MOIS_TITLE = "Duree du programme erreur";
+                        const string ERREUR_MESSAGE_INPUT_INVALIDE_DUREE_MOIS = "Invalide duree du programme doit etre juste des chiffres uniquemenent entre 1 et 60";
+
                         MessageBox.Show(
-                            ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE,
-                            OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning);
-                    }
-
-                    const string ERREUR_DUREE_MOIS_TITLE = "Duree du programme erreur";
-                    const string ERREUR_MESSAGE_INPUT_INVALIDE_DUREE_MOIS = "Invalide duree du programme doit etre juste des chiffres uniquemenent entre 1 et 60";
-                    int dureeEnMois = int.Parse(dureeProgrammeTextbox.Text);
-
-                    Regex regDureeProgramme = new Regex("^([1-9]|[1-5][0-9]|60|all)$");
-
-                    if (!regDureeProgramme.IsMatch(dureeProgrammeTextbox.Text))
-                    {
-                    MessageBox.Show(
                             ERREUR_MESSAGE_INPUT_INVALIDE_DUREE_MOIS ,
                             ERREUR_DUREE_MOIS_TITLE,
                             MessageBoxButton.OK,
                             MessageBoxImage.Warning);
                     }
+
                     /// <summary>
                     /// Verifier la validation de tous les inputs pour le formulaire Ajouter Programme
                     /// </summary>
@@ -307,15 +324,15 @@ namespace Stagiaires_College
             try
             {
                 /// <summary>
-                /// Verifier la validation du No du Stagiaire pour le formulaire Ajouter Stagiaire
+                /// Verifier la validation si toute les TextBox sont vides
                 /// </summary>
-
-                const string OBLIGATION_DATA_ENTRY_ID_STAGIAIRE_TITLE = "Erreur Obligation Data entry ID Stagiaire";
-                const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_STAGIAIRE =
-                    "Invalide data entry pour ID Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
 
                 if ((idStagiareTextbox.Text) == string.Empty)
                 {
+                    const string OBLIGATION_DATA_ENTRY_ID_STAGIAIRE_TITLE = "Erreur Obligation Data entry ID Stagiaire";
+                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_STAGIAIRE =
+                        "Invalide data entry pour ID Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
                     MessageBox.Show(
                         ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_STAGIAIRE,
                         OBLIGATION_DATA_ENTRY_ID_STAGIAIRE_TITLE,
@@ -323,15 +340,73 @@ namespace Stagiaires_College
                         MessageBoxImage.Warning);
                 }
 
-                const string UNIQUE_NO_DE_STAGIAIRE_TITLE = "No d etudiant erreur";
-                const string ERREUR_MESSAGE_INPUT_INVALIDE_NO_STAGIAIRE =
-                    "Invalide No. de stagiaire doit etre juste des chiffres uniquemenent entre 0000000 et 9999999 donc seulement un nombre de longueur de 7 chiffres uniquemenent";
-                int idStagiaire = int.Parse(idStagiareTextbox.Text);
+                else if ((nomStagiaireTextbox.Text) == string.Empty)
+                {
+                    const string OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE_TITLE = "Erreur Obligation Data entry nom Stagiaire";
+                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE =
+                        "Invalide data entry pour nom Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
 
+                    MessageBox.Show(
+                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE,
+                        OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+
+                else if ((prenomStagiaireTextbox.Text) == string.Empty)
+                {
+                    const string OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE_TITLE = "Erreur Obligation Data entry prenom Stagiaire";
+                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE =
+                        "Invalide data entry pour prenom Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
+                    MessageBox.Show(
+                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE,
+                        OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+
+                else if ((dateNaissanceTextbox.Text) == string.Empty)
+                {
+                    const string OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE_TITLE = "Erreur Obligation Data entry date de naissance Stagiaire";
+                    const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE =
+                        "Invalide data entry pour date de naissance Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+
+                    MessageBox.Show(
+                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE,
+                        OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE_TITLE,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+
+                /// <summary>
+                /// Voici les donnees de validation a verifier pour le formulaire Ajouter Programme
+                /// </summary>
+
+                int idStagiaire = int.Parse(idStagiareTextbox.Text);
                 Regex regNoStagiaire = new Regex("^([0-9]){7}$");
+
+                string nomStagiaire = nomStagiaireTextbox.Text;
+                Regex regNomStagiaire = new Regex("^([a-zA-Z][a-zA-Z _]*){1,25}$");
+
+                string prenomStagiaire = prenomStagiaireTextbox.Text;
+                Regex regPrenomStagiaire = new Regex("^([a-zA-Z][a-zA-Z _]*){1,25}$");
+
+                string dateNaissance = dateNaissanceTextbox.Text;
+
+                string sexe = String.Empty;
+
+                Programme programmeChoix = (Programme)this.listeViewProgrammes.SelectedItem;
+                /// <summary>
+                /// Verifier la validation du No du Stagiaire pour le formulaire Ajouter Stagiaire
+                /// </summary>
 
                 if (!regNoStagiaire.IsMatch(idStagiareTextbox.Text))
                 {
+                    const string UNIQUE_NO_DE_STAGIAIRE_TITLE = "No d etudiant erreur";
+                    const string ERREUR_MESSAGE_INPUT_INVALIDE_NO_STAGIAIRE =
+                        "Invalide No. de stagiaire doit etre juste des chiffres uniquemenent entre 0000000 et 9999999 donc seulement un nombre de longueur de 7 chiffres uniquement";
+
                     MessageBox.Show(
                         ERREUR_MESSAGE_INPUT_INVALIDE_NO_STAGIAIRE,
                         UNIQUE_NO_DE_STAGIAIRE_TITLE,
@@ -343,27 +418,13 @@ namespace Stagiaires_College
                 /// Verifier la validation du nom pour le formulaire Ajouter Stagiaire
                 /// </summary>
 
-                const string OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE_TITLE = "Erreur Obligation Data entry nom Stagiaire";
-                const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE =
-                    "Invalide data entry pour nom Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
-
-                if ((nomStagiaireTextbox.Text) == string.Empty)
+                
+                else if (!regNomStagiaire.IsMatch(nomStagiaire))
                 {
-                    MessageBox.Show(
-                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE,
-                        OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE_TITLE,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
-                }
+                    const string ERREUR_NOM_STAGIAIRE_TITLE = "Nom de stagiaire erreur";
+                    const string ERREUR_MESSAGE_INPUT_INVALIDE_NOM_STAGIAIRE =
+                        "Invalide Nom de stagiaire doit etre juste des lettres entre 1 et 25 characteres";
 
-                string nomStagiaire = nomStagiaireTextbox.Text;
-                const string ERREUR_NOM_STAGIAIRE_TITLE = "Nom de stagiaire erreur";
-                const string ERREUR_MESSAGE_INPUT_INVALIDE_NOM_STAGIAIRE =
-                    "Invalide Nom de stagiaire doit etre juste des lettres entre 1 et 25 characteres";
-
-                Regex regNomStagiaire = new Regex("^([a-zA-Z]){1,25}$");
-                if (!regNomStagiaire.IsMatch(nomStagiaire))
-                {
                     MessageBox.Show(
                         ERREUR_MESSAGE_INPUT_INVALIDE_NOM_STAGIAIRE,
                         ERREUR_NOM_STAGIAIRE_TITLE,
@@ -375,27 +436,14 @@ namespace Stagiaires_College
                 /// Verifier la validation du prenom pour le formulaire Ajouter Stagiaire
                 /// </summary>
 
-                const string OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE_TITLE = "Erreur Obligation Data entry prenom Stagiaire";
-                const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE =
-                    "Invalide data entry pour prenom Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
+                
 
-                if ((prenomStagiaireTextbox.Text) == string.Empty)
+                else if (!regPrenomStagiaire.IsMatch(prenomStagiaire))
                 {
-                    MessageBox.Show(
-                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE,
-                        OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE_TITLE,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
-                }
+                    const string ERREUR_PRENOM_STAGIAIRE_TITLE = "Prenom de stagiaire erreur";
+                    const string ERREUR_MESSAGE_INPUT_INVALIDE_PRENOM_STAGIAIRE =
+                        "Invalide Prenom de stagiaire doit etre juste des lettres entre 1 et 25 characteres";
 
-                string prenomStagiaire = prenomStagiaireTextbox.Text;
-                const string ERREUR_PRENOM_STAGIAIRE_TITLE = "Prenom de stagiaire erreur";
-                const string ERREUR_MESSAGE_INPUT_INVALIDE_PRENOM_STAGIAIRE =
-                    "Invalide Prenom de stagiaire doit etre juste des lettres entre 1 et 25 characteres";
-
-                Regex regPrenomStagiaire = new Regex("^([a-zA-Z]){1,25}$");
-                if (!regPrenomStagiaire.IsMatch(prenomStagiaire))
-                {
                     MessageBox.Show(
                         ERREUR_MESSAGE_INPUT_INVALIDE_PRENOM_STAGIAIRE,
                         ERREUR_PRENOM_STAGIAIRE_TITLE,
@@ -404,59 +452,27 @@ namespace Stagiaires_College
                 }
 
                 /// <summary>
-                /// Verifier la validation de la date de naissance pour le formulaire Ajouter Stagiaire
-                /// </summary>
-
-                const string OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE_TITLE = "Erreur Obligation Data entry date de naissance Stagiaire";
-                const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE =
-                    "Invalide data entry pour date de naissance Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
-
-                if ((dateNaissanceTextbox.Text) == string.Empty)
-                {
-                    MessageBox.Show(
-                        ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE,
-                        OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE_TITLE,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
-                }
-
-                string dateNaissance = dateNaissanceTextbox.Text;
-                const string ERREUR_DATE_DE_NAISSANCE_STAGIAIRE_TITLE = "Date de naissance de stagiaire erreur";
-                const string ERREUR_MESSAGE_INPUT_INVALIDE_DATE_DE_NAISSANCE_STAGIAIRE =
-                    "Invalide Date de naissance de stagiaire doit etre de format dd/mm/yyyy";
-
-                Regex regDateNaissanceStagiaire = new Regex("^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$");
-                if (!regDateNaissanceStagiaire.IsMatch(dateNaissance))
-                {
-                    MessageBox.Show(
-                        ERREUR_MESSAGE_INPUT_INVALIDE_DATE_DE_NAISSANCE_STAGIAIRE,
-                        ERREUR_DATE_DE_NAISSANCE_STAGIAIRE_TITLE,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
-                }
-
-                /// <summary>
                 /// Verifier la validation du sexe pour le formulaire Ajouter Stagiaire
                 /// </summary>
                 
-                string sexe = String.Empty;
                 
-                if (sexeHommeRadioBox.IsChecked == true)
+                
+                else if (sexeHommeRadioBox.IsChecked == true)
                 {
                     sexe = (sexeHommeRadioBox.IsChecked == true) ? "Homme" : String.Empty;
                 }
 
-                if (sexeFemmeRadioBox.IsChecked == true)
+                else if (sexeFemmeRadioBox.IsChecked == true)
                 {
                     sexe = (sexeFemmeRadioBox.IsChecked == true) ? "Femme" : String.Empty;
                 }
 
-                const string ERREUR_SEXE_STAGIAIRE_TITLE = "Erreur Obligation Data entry sexe Stagiaire";
-                const string ERREUR_MESSAGE_INPUT_INVALIDE_SEXE_STAGIAIRE =
-                    "Invalide data entry pour sexe Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide, vous devez en selectionner un sexe";
-
-                if (sexe == String.Empty)
+                else if (sexe == String.Empty)
                 {
+                    const string ERREUR_SEXE_STAGIAIRE_TITLE = "Erreur Obligation Data entry sexe Stagiaire";
+                    const string ERREUR_MESSAGE_INPUT_INVALIDE_SEXE_STAGIAIRE =
+                        "Invalide data entry pour sexe Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide, vous devez en selectionner un sexe";
+
                     MessageBox.Show(
                         ERREUR_MESSAGE_INPUT_INVALIDE_SEXE_STAGIAIRE,
                         ERREUR_SEXE_STAGIAIRE_TITLE,
@@ -468,14 +484,12 @@ namespace Stagiaires_College
                 /// Verifier la validation de la selecton du programme pour le stagiaire en utilisant le formulaire Ajouter Stagiaire
                 /// </summary>
 
-                Programme programmeChoix = (Programme)this.listeViewProgrammes.SelectedItem;
-
-                const string ERREUR_PROGRAMME_CHOIX_STAGIAIRE_TITLE = "Erreur Obligation selection de donnee Stagiaire";
-                const string ERREUR_MESSAGE_INPUT_INVALIDE_PROGRAMME_CHOIX_STAGIAIRE =
-                    "Invalide selection de donnee pour le Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide, vous devez en selectionner un programme";
-
                 if (programmeChoix == null)
                 {
+                    const string ERREUR_PROGRAMME_CHOIX_STAGIAIRE_TITLE = "Erreur Obligation selection d'un programme pour Stagiaire";
+                    const string ERREUR_MESSAGE_INPUT_INVALIDE_PROGRAMME_CHOIX_STAGIAIRE =
+                        "Invalide selection d'un programme pour le Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide, vous devez en selectionner un programme";
+
                     MessageBox.Show(
                         ERREUR_MESSAGE_INPUT_INVALIDE_PROGRAMME_CHOIX_STAGIAIRE,
                         ERREUR_PROGRAMME_CHOIX_STAGIAIRE_TITLE,
@@ -486,7 +500,7 @@ namespace Stagiaires_College
                 /// <summary>
                 /// Verifier la validation de tous les inputs pour le formulaire Ajouter Stagiaire
                 /// </summary>
-                if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaire) && regPrenomStagiaire.IsMatch(prenomStagiaire) && regDateNaissanceStagiaire.IsMatch(dateNaissance) && sexe!= String.Empty && programmeChoix != null)
+                if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaire) && regPrenomStagiaire.IsMatch(prenomStagiaire) && dateNaissanceTextbox.Text != string.Empty && sexe!= String.Empty && programmeChoix != null)
                 {
                     stagiaires.Add(new Stagiaire(idStagiaire, nomStagiaire, prenomStagiaire, dateNaissance, sexe, programmeChoix));
                     effacer_Stagiaire_Formulaire();
@@ -527,6 +541,5 @@ namespace Stagiaires_College
             sexeHommeRadioBox.IsChecked = false;
             sexeFemmeRadioBox.IsChecked = false;
         }
-
-}
+    }
 }
