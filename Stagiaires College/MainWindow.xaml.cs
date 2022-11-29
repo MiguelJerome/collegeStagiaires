@@ -39,6 +39,10 @@ namespace Stagiaires_College
             this.dureeEnMois = dureeEnMois; // minimun 1 , maxinmum 60 mois
         }
 
+        public string GetterId()
+        {
+            return $"{this.id}";
+        }
         public override string ToString()
         {
             return $"{this.id} {this.nom} {this.dureeEnMois}";
@@ -59,16 +63,16 @@ namespace Stagiaires_College
         public string dateNaissance { get; set; } // string letters only
         public string sexe { get; set; } // only female or only male
         
-        public Programme programme { get; set; }
+        public int programme_id { get; set; }
 
-        public Stagiaire(int id, string nom, string prenom, string dateNaissance, string sexe, Programme programme)
+        public Stagiaire(int id, string nom, string prenom, string dateNaissance, string sexe, int programme_id)
         {
             this.id = id;
             this.nom = nom;
             this.prenom = prenom;
             this.dateNaissance = dateNaissance;
             this.sexe = sexe;
-            this.programme = programme;
+            this.programme_id = programme_id;
 
         }
 
@@ -126,8 +130,8 @@ namespace Stagiaires_College
             /// <summary>
             /// voici des data dummy ou seed data pour d objet stagiaire pour tester
             /// </summary>
-            stagiaires.Add(new Stagiaire(5000, "Jerome", "Miguel", "28/11/2022", "Homme", new Programme(2001, "Math", 60)));
-            stagiaires.Add(new Stagiaire(5001, "Igondjo", "Synn", "28/11/2022", "Homme", new Programme(2001, "Math", 60)));
+            stagiaires.Add(new Stagiaire(5000, "Jerome", "Miguel", "28/11/2022", "Homme", 11));
+            stagiaires.Add(new Stagiaire(5000, "Jerome", "Danielle", "28/11/2022", "Femme", 12));
 
             /// <summary>
             /// faire le data binding pour different listeview avec les programmes et stagiaires
@@ -486,7 +490,7 @@ namespace Stagiaires_College
 
                 if (programmeChoix == null)
                 {
-                    const string ERREUR_PROGRAMME_CHOIX_STAGIAIRE_TITLE = "Erreur Obligation selection d'un programme pour Stagiaire";
+                    const string ERREUR_PROGRAMME_CHOIX_STAGIAIRE_TITLE = $"Erreur Obligation selection d'un programme pour Stagiaire";
                     const string ERREUR_MESSAGE_INPUT_INVALIDE_PROGRAMME_CHOIX_STAGIAIRE =
                         "Invalide selection d'un programme pour le Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide, vous devez en selectionner un programme";
 
@@ -502,7 +506,7 @@ namespace Stagiaires_College
                 /// </summary>
                 if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaire) && regPrenomStagiaire.IsMatch(prenomStagiaire) && dateNaissanceTextbox.Text != string.Empty && sexe!= String.Empty && programmeChoix != null)
                 {
-                    stagiaires.Add(new Stagiaire(idStagiaire, nomStagiaire, prenomStagiaire, dateNaissance, sexe, programmeChoix));
+                    stagiaires.Add(new Stagiaire(idStagiaire, nomStagiaire, prenomStagiaire, dateNaissance, sexe, int.Parse(programmeChoix.GetterId())));
                     effacer_Stagiaire_Formulaire();
                 }
             }

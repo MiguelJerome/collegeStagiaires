@@ -475,7 +475,7 @@
                                                 Width="200"/>
                                 <GridViewColumn Header="Sexe" DisplayMemberBinding="{Binding sexe}" 
                                                 Width="100"/>
-                                <GridViewColumn Header="Programme" DisplayMemberBinding="{Binding programme}" 
+                                <GridViewColumn Header="Programme" DisplayMemberBinding="{Binding programme_id}" 
                                                 Width="200"/>
                             </GridView>
                         </ListView.View>
