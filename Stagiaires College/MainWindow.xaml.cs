@@ -147,26 +147,26 @@ namespace Stagiaires_College
             /// <summary>
             /// voici des data dummy ou seed data pour d objet programmes pour tester
             /// </summary>
-            programmes.Add(new Programme(2001, "Math", 60));
-            programmes.Add(new Programme(2011, "English", 48));
-            programmes.Add(new Programme(2021, "Spanish", 24));
+            programmes.Add(new Programme(9992001, "Math", 60));
+            programmes.Add(new Programme(9992011, "English", 48));
+            programmes.Add(new Programme(9992021, "Spanish", 24));
 
             /// <summary>
             /// voici des data dummy ou seed data pour d objet stagiaire pour tester
             /// </summary>
-           stagiaires.Add(new Stagiaire(5000, "Jerome", "Miguel", "28/11/2022", "Homme", 2011));
-            stagiaires.Add(new Stagiaire(5011, "Jerome", "Danielle", "28/11/2022", "Femme", 2001));
-            stagiaires.Add(new Stagiaire(5012, "Jerome", "Daniel", "28/11/2022", "Homme", 2001));
-            stagiaires.Add(new Stagiaire(5013, "Jerome", "Maria", "28/11/2022", "Femme", 2021)); 
-            stagiaires.Add(new Stagiaire(5014, "Jerome", "Alponse", "28/11/2022", "Homme", 2001));
-            stagiaires.Add(new Stagiaire(5015, "Jerome", "Stephanie", "28/11/2022", "Femme", 2011));
-            stagiaires.Add(new Stagiaire(5016, "Jerome", "James", "28/11/2022", "Femme", 2021));
-            stagiaires.Add(new Stagiaire(5017, "Jerome", "Gabrielle", "28/11/2022", "Femme", 2011));
-            stagiaires.Add(new Stagiaire(5018, "Jerome", "George", "28/11/2022", "Femme", 2001));
-            stagiaires.Add(new Stagiaire(5019, "Jerome", "Jenifer", "28/11/2022", "Femme", 2021));
-            stagiaires.Add(new Stagiaire(5020, "Jerome", "Marc", "28/11/2022", "Homme", 2001));
-            stagiaires.Add(new Stagiaire(5021, "Jerome", "Carly", "28/11/2022", "Femme", 2011));
-            stagiaires.Add(new Stagiaire(5022, "Jerome", "Synn", "28/11/2022", "Homme", 2021));
+           stagiaires.Add(new Stagiaire(9995000, "Jerome", "Miguel", "28/11/2022", "Homme", 9992011));
+            stagiaires.Add(new Stagiaire(9995011, "Jerome", "Danielle", "28/11/2022", "Femme", 9992001));
+            stagiaires.Add(new Stagiaire(9995012, "Jerome", "Daniel", "28/11/2022", "Homme", 9992001));
+            stagiaires.Add(new Stagiaire(9995013, "Jerome", "Maria", "28/11/2022", "Femme", 9992021)); 
+            stagiaires.Add(new Stagiaire(9995014, "Jerome", "Alponse", "28/11/2022", "Homme", 9992001));
+            stagiaires.Add(new Stagiaire(9995015, "Jerome", "Stephanie", "28/11/2022", "Femme", 9992011));
+            stagiaires.Add(new Stagiaire(9995016, "Jerome", "James", "28/11/2022", "Femme", 9992021));
+            stagiaires.Add(new Stagiaire(9995017, "Jerome", "Gabrielle", "28/11/2022", "Femme", 9992011));
+            stagiaires.Add(new Stagiaire(9995018, "Jerome", "George", "28/11/2022", "Femme", 9992001));
+            stagiaires.Add(new Stagiaire(9995019, "Jerome", "Jenifer", "28/11/2022", "Femme", 9992021));
+            stagiaires.Add(new Stagiaire(9995020, "Jerome", "Marc", "28/11/2022", "Homme", 9992001));
+            stagiaires.Add(new Stagiaire(9995021, "Jerome", "Carly", "28/11/2022", "Femme", 9992011));
+            stagiaires.Add(new Stagiaire(9995022, "Jerome", "Synn", "28/11/2022", "Homme", 9992021));
 
             /// <summary>
             /// faire le data binding pour different listeview avec les programmes et stagiaires
@@ -586,7 +586,6 @@ namespace Stagiaires_College
             }
             else if (listViewProgrammeConsulter.SelectedItem != null)
             {
-
                 foreach (var VARIABLE in this.stagiaires)
                 {
 
@@ -596,9 +595,6 @@ namespace Stagiaires_College
                         }
                 }
             }
-
         }
-
-
     }
 }
