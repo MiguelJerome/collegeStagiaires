@@ -20,7 +20,8 @@
                     Background="#FF92BAF4" 
                     BorderBrush="#FF087EE1"
                     BorderThickness =" 10">
-            <TabItem Header="Programmes" 
+            <TabItem x:Name="programmesTabItem"
+                     Header="Programmes" 
                      Margin="-2,-2,-19,0"
                      Background="#FF04F510"
                      Foreground="black"
@@ -168,7 +169,8 @@
                 </Grid>
             </TabItem>
             <!--Voici l'onglet Stagiaires pour le formulaire Ajouter Stagiaire -->
-            <TabItem Header="Stagiaires" 
+            <TabItem x:Name="stagiairesTabItem"
+                     Header="Stagiaires" 
                      Margin="18,-2,-63,0"
                      Background="#FF04F510"
                      Foreground="black"
@@ -409,7 +411,8 @@
                 </Grid>
             </TabItem>
             <!--Voici l'onglet Consulter pour consulter la liste de Stagiaire par programme -->
-            <TabItem Header="Consulter" 
+            <TabItem x:Name="consulterTabItem" 
+                     Header="Consulter" 
                      Margin="63,-1,-96,-1"
                      Background="#FF04F510"
                      Foreground="black"
@@ -443,6 +446,19 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    <Button x:Name="chercherProgrammeStagiaires" 
+                            Content="Afficher Tous Les Stagiaires" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,285,0,0" 
+                            VerticalAlignment="Top" 
+                            Height="35" 
+                            Width="760" 
+                            FontSize="22" 
+                            FontWeight="Bold"
+                            RenderTransformOrigin="0.498,6.374"
+                            Background="#FF01DDDD" 
+                            Foreground="White"
+                            Click="ChercherProgrammeStagiaires_OnClick"/>
                     <!--ceci est le label liste des stagiaires pour consulter la liste de Stagiaire par programme-->
                     <Label Content="Liste des stagiaires:" 
                            HorizontalAlignment="Left" 
