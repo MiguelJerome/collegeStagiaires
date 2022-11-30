@@ -105,11 +105,13 @@ namespace Stagiaires_College
         /// <summary>
         /// erreur message attraper par les try ...  catch utiliser globalement a travers du programme
         /// </summary>
+        
         private string ERREUR_RECOMMANCER_FORMULAIRE = "Veuillez recommencer";
 
         /// <summary>
         /// creer les objets programmes et objects stagiaires pour qu'il reagissent dynamiquement
         /// </summary>
+        
         private ObservableCollection<Programme> programmes = new ObservableCollection<Programme>();
         private ObservableCollection<Stagiaire> stagiaires = new ObservableCollection<Stagiaire>();
         private ObservableCollection<Stagiaire> stagiairesSelectionner = new ObservableCollection<Stagiaire>();
@@ -119,23 +121,27 @@ namespace Stagiaires_College
             /// <summary>
             /// est une méthode qui est automatiquement créée et gérée par le concepteur Windows Forms et qui définit tout ce que vous voyez sur le formulaire
             /// </summary>
+            
             InitializeComponent();
 
             /// <summary>
             /// la fenêtre ne peut pas modifier sa grosseur
             /// la fenêtre est centrer a l'ecran
             /// </summary>
+            
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize;
 
             /// <summary>
             /// on bind avec DataContext avec le programmes et le stagiaires
             /// </summary>
+            
             DataContext = this;
             
             /// <summary>
             /// voici des data dummy ou seed data pour d objet programmes pour tester
             /// </summary>
+            
             programmes.Add(new Programme(9992001, "Math", 60));
             programmes.Add(new Programme(9992011, "English", 48));
             programmes.Add(new Programme(9992021, "Spanish", 24));
@@ -143,6 +149,7 @@ namespace Stagiaires_College
             /// <summary>
             /// voici des data dummy ou seed data pour d objet stagiaire pour tester
             /// </summary>
+            
            stagiaires.Add(new Stagiaire(9995000, "Jerome", "Miguel", "28/11/2022", "Homme", 9992011));
             stagiaires.Add(new Stagiaire(9995011, "Jerome", "Danielle", "28/11/2022", "Femme", 9992001));
             stagiaires.Add(new Stagiaire(9995012, "Jerome", "Daniel", "28/11/2022", "Homme", 9992001));
@@ -160,13 +167,14 @@ namespace Stagiaires_College
             /// <summary>
             /// faire le data binding pour different listeview avec les programmes et stagiaires
             /// </summary>
+            
             this.listeViewProgrammes.ItemsSource = programmes;
             this.listeViewStagiaires.ItemsSource = stagiairesSelectionner;
             this.listViewProgrammeConsulter.ItemsSource = programmes;
         }
 
         /// <summary>
-        /// ajouter toute les data entry pour le formulaire Ajouter Programme en appuyant sur le bouton effacer Programme
+        /// ajouter toute les data entry pour le formulaire Ajouter Programme en appuyant sur le bouton ajouter Programme
         /// </summary>
         private void ajouter_Programme_Click(object sender, RoutedEventArgs e)
         {
@@ -292,9 +300,11 @@ namespace Stagiaires_College
                         effacer_Programme_Formulaire();
                     }
                 }
+
             /// <summary>
             /// Verifier si il y a des excepction de contraites qui n'ont pas ete encore traiter pour le formulaire Ajouter Programme
             /// </summary>
+            
             catch (Exception)
             {
                 const string ERREUR_AJOUTER_FORMULAIRE_PROGRAMME = "Erreur!!! Ajouter Programme Contraintes\n";
@@ -322,8 +332,9 @@ namespace Stagiaires_College
         }
 
         /// <summary>
-        /// ajouter toute les data entry pour le formulaire Ajouter Stagiaire en appuyant sur le bouton effacer Stagiaire
+        /// ajouter toute les data entry pour le formulaire Ajouter Stagiaire en appuyant sur le bouton ajouter Stagiaire
         /// </summary>
+        
         private void ajouter_Stagiaire_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -354,6 +365,7 @@ namespace Stagiaires_College
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning);
                 }
+
                 /// <summary>
                 /// Verifier la validation si id Stagiaire TextBox est vide
                 /// </summary>
@@ -374,6 +386,7 @@ namespace Stagiaires_College
                 /// <summary>
                 /// Verifier la validation du No du Stagiaire pour le formulaire Ajouter Stagiaire
                 /// </summary>
+                
                 else if (!regNoStagiaire.IsMatch(idStagiareTextbox.Text))
                 {
                     const string UNIQUE_NO_DE_STAGIAIRE_TITLE = "No d etudiant erreur";
@@ -390,6 +403,7 @@ namespace Stagiaires_College
                 /// <summary>
                 /// Verifier la validation si nom Stagiaire TextBox est vide
                 /// </summary>
+                
                 else if ((nomStagiaireTextbox.Text) == string.Empty)
                 {
                     const string OBLIGATION_DATA_ENTRY_NOM_STAGIAIRE_TITLE = "Erreur Obligation Data entry nom Stagiaire";
@@ -559,11 +573,14 @@ namespace Stagiaires_College
         private void AfficherProgrammeStagiaires_OnClick(object sender, RoutedEventArgs e)
         {
             /// <summary>
-            /// Verifier la validation si il y a aucun Stagiaire selectionner est vide
+            /// Verifier la validation si il y a aucun Programme selectionner a partir de la List View Programme Consulter
             /// </summary>
 
             Programme programmeChoix = (Programme)this.listViewProgrammeConsulter.SelectedItem;
-       
+
+            /// <summary>
+            /// effacer toute les donnees de la ObservableCollection<Stagiaire> stagiairesSelectionner
+            /// </summary>
             this.stagiairesSelectionner.Clear();
 
             if (listViewProgrammeConsulter.SelectedItem == null)
@@ -587,7 +604,6 @@ namespace Stagiaires_College
             {
                 foreach (var VARIABLE in this.stagiaires)
                 {
-
                     if (programmeChoix.GetterId() == VARIABLE.GetterProgrammeId())
                         {
                             stagiairesSelectionner.Add(new Stagiaire(VARIABLE.id, VARIABLE.nom, VARIABLE.prenom, VARIABLE.dateNaissance, VARIABLE.sexe, VARIABLE.GetterProgrammeId()));
