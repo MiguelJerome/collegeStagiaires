@@ -569,16 +569,9 @@ namespace Stagiaires_College
             /// </summary>
 
             Programme programmeChoix = (Programme)this.listViewProgrammeConsulter.SelectedItem;
-            foreach (var VARIABLE in this.stagiairesSelectionner)
-            {
-                if (int.Parse(programmeChoix.GetterId()) != VARIABLE.GetterProgrammeId())
-                {
-                    this.stagiairesSelectionner.Remove(VARIABLE);
-                    break;
-                }
-            }
+       
+            this.stagiairesSelectionner.Clear();
 
-           
             if (listViewProgrammeConsulter.SelectedItem == null)
             {
                 const string ERREUR_PROGRAMME_CHOIX_STAGIAIRE_TITLE = $"Erreur Obligation selection d'un programme pour Stagiaire";
