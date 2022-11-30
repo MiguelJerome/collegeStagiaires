@@ -39,18 +39,14 @@ namespace Stagiaires_College
             this.dureeEnMois = dureeEnMois; // minimun 1 , maxinmum 60 mois
         }
 
-        public string GetterId()
+        public int GetterId()
         {
-            return $"{this.id}";
-        }
-        public override string ToString()
-        {
-            return $"{this.id} {this.nom} {this.dureeEnMois}";
+            return this.id;
         }
     }
 
     /// <summary>
-    /// voici la classe Stagiaire qui contient les attribut id, nom, prenom, date, Naissance, sexe 
+    /// voici la classe Stagiaire qui contient les attribut id, nom, prenom, date de Naissance, sexe, programme id 
     /// </summary>
     public class Stagiaire
     {
@@ -99,11 +95,6 @@ namespace Stagiaires_College
         {
             return this.programme_id;
         }
-        public override string ToString()
-        {
-            return $"{this.id} {this.nom} {this.prenom} {this.dateNaissance} {this.sexe}";
-        }
-
     }
 
     /// <summary>
@@ -141,9 +132,7 @@ namespace Stagiaires_College
             /// on bind avec DataContext avec le programmes et le stagiaires
             /// </summary>
             DataContext = this;
-            DataContext = this.programmes;
-            DataContext = this.stagiaires;
-
+            
             /// <summary>
             /// voici des data dummy ou seed data pour d objet programmes pour tester
             /// </summary>
@@ -166,7 +155,7 @@ namespace Stagiaires_College
             stagiaires.Add(new Stagiaire(9995019, "Jerome", "Jenifer", "28/11/2022", "Femme", 9992021));
             stagiaires.Add(new Stagiaire(9995020, "Jerome", "Marc", "28/11/2022", "Homme", 9992001));
             stagiaires.Add(new Stagiaire(9995021, "Jerome", "Carly", "28/11/2022", "Femme", 9992011));
-            stagiaires.Add(new Stagiaire(9995022, "Jerome", "Synn", "28/11/2022", "Homme", 9992021));
+            stagiaires.Add(new Stagiaire(9995022, "Igondjo", "Synn Sloan", "28/11/2022", "Homme", 9992021));
 
             /// <summary>
             /// faire le data binding pour different listeview avec les programmes et stagiaires
@@ -242,6 +231,7 @@ namespace Stagiaires_College
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Warning);
                         }
+
                     /// <summary>
                     /// Verifier la validation du nom du Programme pour le formulaire Ajouter Programme
                     /// </summary>
@@ -295,6 +285,7 @@ namespace Stagiaires_College
                     /// <summary>
                     /// Verifier la validation de tous les inputs pour le formulaire Ajouter Programme
                     /// </summary>
+                    
                     if (regNoProgramme.IsMatch(idProgrammesTextbox.Text) && regNomProgramme.IsMatch(nomProgrammeTextbox.Text) && regDureeProgramme.IsMatch(dureeProgrammeTextbox.Text))
                     {
                         programmes.Add(new Programme(int.Parse(idProgrammesTextbox.Text), nomProgrammeTextbox.Text, int.Parse(dureeProgrammeTextbox.Text)));
@@ -432,7 +423,7 @@ namespace Stagiaires_College
                 /// <summary>
                 /// Verifier la validation si prenom Stagiaire TextBox est vide
                 /// </summary>
-                /// 
+                
                 else if ((prenomStagiaireTextbox.Text) == string.Empty)
                 {
                     const string OBLIGATION_DATA_ENTRY_PRENOM_STAGIAIRE_TITLE = "Erreur Obligation Data entry prenom Stagiaire";
@@ -466,7 +457,7 @@ namespace Stagiaires_College
                 /// <summary>
                 /// Verifier la validation si date de naissance Stagiaire TextBox est vide
                 /// </summary>
-                /// 
+                
                 else if ((dateNaissanceTextbox.Text) == string.Empty)
                 {
                     const string OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE_TITLE = "Erreur Obligation Data entry date de naissance Stagiaire";
@@ -499,6 +490,7 @@ namespace Stagiaires_College
                         sexe = "Femme";
                    
                 }
+
                 /// <summary>
                 /// Verifier la validation si le sexe du Stagiaire RadioBox n'est pas selectionner
                 /// </summary>
@@ -519,9 +511,10 @@ namespace Stagiaires_College
                 /// <summary>
                 /// Verifier la validation de tous les inputs pour le formulaire Ajouter Stagiaire
                 /// </summary>
+                
                 if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaireTextbox.Text) && regPrenomStagiaire.IsMatch(prenomStagiaireTextbox.Text) && dateNaissanceTextbox.Text != string.Empty && sexe!= String.Empty && this.listeViewProgrammes.SelectedItem != null)
                 {
-                    stagiaires.Add(new Stagiaire(int.Parse(idStagiareTextbox.Text), nomStagiaireTextbox.Text, prenomStagiaireTextbox.Text, dateNaissanceTextbox.Text, sexe, int.Parse(programmeChoix.GetterId())));
+                    stagiaires.Add(new Stagiaire(int.Parse(idStagiareTextbox.Text), nomStagiaireTextbox.Text, prenomStagiaireTextbox.Text, dateNaissanceTextbox.Text, sexe, programmeChoix.GetterId()));
                     effacer_Stagiaire_Formulaire();
                 }
             }
@@ -529,6 +522,7 @@ namespace Stagiaires_College
             /// <summary>
             /// Verifier si il y a des excepction de contraites qui n'ont pas ete encore traiter pour le formulaire Ajouter Stagiaire
             /// </summary>
+            
             catch (Exception ex)
             {
                  const string ERREUR_AJOUTER_FORMULAIRE_STAGIAIRE = "Erreur!!! Ajouter Stagiaire Contraintes";
@@ -562,10 +556,10 @@ namespace Stagiaires_College
             listeViewProgrammes.SelectedItem = null;
         }
 
-        private void ChercherProgrammeStagiaires_OnClick(object sender, RoutedEventArgs e)
+        private void AfficherProgrammeStagiaires_OnClick(object sender, RoutedEventArgs e)
         {
-            // <summary>
-            /// Verifier la validation de la selecton du programme pour afficher tous les stagiaires incrit a ce programme en utilisant la list view Programme consulter
+            /// <summary>
+            /// Verifier la validation si il y a aucun Stagiaire selectionner est vide
             /// </summary>
 
             Programme programmeChoix = (Programme)this.listViewProgrammeConsulter.SelectedItem;
@@ -584,12 +578,17 @@ namespace Stagiaires_College
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
             }
+
+            // <summary>
+            /// Verifier la validation de la selecton du programme pour afficher tous les stagiaires incrit a ce programme en utilisant la list view Programme consulter
+            /// </summary>
+
             else if (listViewProgrammeConsulter.SelectedItem != null)
             {
                 foreach (var VARIABLE in this.stagiaires)
                 {
 
-                    if (int.Parse(programmeChoix.GetterId()) == VARIABLE.GetterProgrammeId())
+                    if (programmeChoix.GetterId() == VARIABLE.GetterProgrammeId())
                         {
                             stagiairesSelectionner.Add(new Stagiaire(VARIABLE.id, VARIABLE.nom, VARIABLE.prenom, VARIABLE.dateNaissance, VARIABLE.sexe, VARIABLE.GetterProgrammeId()));
                         }

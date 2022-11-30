@@ -431,21 +431,23 @@
                     <ListView x:Name="listViewProgrammeConsulter" 
                               Margin="34,47,0,459"
                               Background="#feabe6"
-                              Foreground="black">
+                              Foreground="black"
+                              Width="1076">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Numero Cours" 
+                                <GridViewColumn Header="No. Programmes" 
                                                 DisplayMemberBinding="{Binding id}"  
                                                 Width="302"/>
                                 <GridViewColumn Header="Nom" 
                                                 DisplayMemberBinding="{Binding nom}"  
-                                                Width="502"/>
+                                                Width="552"/>
                                 <GridViewColumn Header="Duree En Mois" 
                                                 DisplayMemberBinding="{Binding dureeEnMois}" 
                                                 Width="210"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    <!--ceci est le bouton afficher tous les Stagiaires d un programme selectionner a partir de l'onglet Consulter-->
                     <Button x:Name="chercherProgrammeStagiaires" 
                             Content="Afficher Tous Les Stagiaires" 
                             HorizontalAlignment="Center" 
@@ -458,7 +460,7 @@
                             RenderTransformOrigin="0.498,6.374"
                             Background="#FF01DDDD" 
                             Foreground="White"
-                            Click="ChercherProgrammeStagiaires_OnClick"/>
+                            Click="AfficherProgrammeStagiaires_OnClick"/>
                     <!--ceci est le label liste des stagiaires pour consulter la liste de Stagiaire par programme-->
                     <Label Content="Liste des stagiaires:" 
                            HorizontalAlignment="Left" 
@@ -473,7 +475,7 @@
                     <ListView  Margin="34,378,0,92" 
                                HorizontalAlignment="Left" 
                                Grid.ColumnSpan="2" 
-                               Width="1026" 
+                               Width="1076" 
                                x:Name="listeViewStagiaires"
                                Background="#feabe6"
                                Foreground="black"
@@ -481,17 +483,17 @@
                                BorderThickness =" 3">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Numero Cours" DisplayMemberBinding="{Binding id}"
+                                <GridViewColumn Header="No. Stagiaires" DisplayMemberBinding="{Binding id}"
                                                 Width="160"/>
                                 <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding nom}"  
-                                                Width="190"/>
+                                                Width="200"/>
                                 <GridViewColumn Header="Prenom" DisplayMemberBinding="{Binding prenom}" 
-                                                Width="190"/>
+                                                Width="200"/>
                                 <GridViewColumn Header="Date de naissance" DisplayMemberBinding="{Binding dateNaissance}" 
                                                 Width="200"/>
                                 <GridViewColumn Header="Sexe" DisplayMemberBinding="{Binding sexe}" 
                                                 Width="100"/>
-                                <GridViewColumn Header="Programme" DisplayMemberBinding="{Binding programme_id}" 
+                                <GridViewColumn Header="No. Programmes" DisplayMemberBinding="{Binding programme_id}" 
                                                 Width="200"/>
                             </GridView>
                         </ListView.View>
