@@ -13,9 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using MySql.Data.MySqlClient;
+
 namespace Stagiaires_College
 {
     using System.Collections.ObjectModel;
+    using System.Data;
     using System.Diagnostics.Eventing.Reader;
     using System.Runtime.CompilerServices;
     using System.Security.Cryptography.X509Certificates;
@@ -108,10 +111,12 @@ namespace Stagiaires_College
         
         private string ERREUR_RECOMMANCER_FORMULAIRE = "Veuillez recommencer";
 
+        private MySqlConnection conBD;
+
         /// <summary>
         /// creer les objets programmes et objects stagiaires pour qu'il reagissent dynamiquement
         /// </summary>
-        
+
         private ObservableCollection<Programme> programmes = new ObservableCollection<Programme>();
         private ObservableCollection<Stagiaire> stagiaires = new ObservableCollection<Stagiaire>();
         private ObservableCollection<Stagiaire> stagiairesSelectionner = new ObservableCollection<Stagiaire>();
@@ -124,11 +129,15 @@ namespace Stagiaires_College
             
             InitializeComponent();
 
+            conBD = new MySqlConnection("Server=localhost;Uid=root;Pwd=;database=college_stagiaire");
+           // Charger_programme();
+           // Charger_stagiaires();
+
             /// <summary>
             /// la fenêtre ne peut pas modifier sa grosseur
             /// la fenêtre est centrer a l'ecran
             /// </summary>
-            
+
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize;
 
@@ -167,15 +176,52 @@ namespace Stagiaires_College
             /// <summary>
             /// faire le data binding pour different listeview avec les programmes et stagiaires
             /// </summary>
-            
+
+
+   /*         
+                        try
+                        {
+                            
+                            string sqlId = "SELECT id FROM programme";
+
+                            MySqlCommand cmdId = new MySqlCommand(sqlId, conBD);
+                            MySqlDataReader drId = cmdId.ExecuteReader();
+
+                            string sqlNom = "SELECT nom FROM programme";
+
+                            MySqlCommand cmdNom = new MySqlCommand(sqlNom, conBD);
+                            MySqlDataReader drNom = cmdNom.ExecuteReader();
+
+                            string sqlDureeEnMois = "SELECT dureeEnMois FROM programme";
+
+                            MySqlCommand cmdDureeEnMois = new MySqlCommand(sqlDureeEnMois, conBD);
+                            MySqlDataReader drDureeEnMois = cmdDureeEnMois.ExecuteReader();
+
+                            while (drId.Read() )
+                            {
+                                //programmes.Add(new Programme((int)drId[0], (string)drNom[0], (int)drDureeEnMois[0]));
+                                programmes.Add(new Programme(8992021, "Chinese", 11));
+
+                                drId.Close();
+                                drNom.Close();
+                                drDureeEnMois.Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+     */    
             this.listeViewProgrammes.ItemsSource = programmes;
             this.listeViewStagiaires.ItemsSource = stagiairesSelectionner;
             this.listViewProgrammeConsulter.ItemsSource = programmes;
+
         }
 
         /// <summary>
         /// ajouter toute les data entry pour le formulaire Ajouter Programme en appuyant sur le bouton ajouter Programme
         /// </summary>
+
         private void ajouter_Programme_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -297,16 +343,38 @@ namespace Stagiaires_College
                     if (regNoProgramme.IsMatch(idProgrammesTextbox.Text) && regNomProgramme.IsMatch(nomProgrammeTextbox.Text) && regDureeProgramme.IsMatch(dureeProgrammeTextbox.Text))
                     {
                         programmes.Add(new Programme(int.Parse(idProgrammesTextbox.Text), nomProgrammeTextbox.Text, int.Parse(dureeProgrammeTextbox.Text)));
-                        effacer_Programme_Formulaire();
+
+                        conBD.Open();
+
+                        string sql = "INSERT INTO programme(id, nom, dureeEnMois) values (@id,@nom, @dureeEnMois)";
+
+                        MySqlCommand cmd = new MySqlCommand(sql, conBD);
+                        
+                        cmd.CommandType = CommandType.Text;
+                        
+                        //Inserer nos valeurs
+                                                                                                                                    cmd.Parameters.AddWithValue("@id", idProgrammesTextbox.Text);
+                                                                                                                                    cmd.Parameters.AddWithValue("@nom", nomProgrammeTextbox.Text);
+                                                                                                                                    cmd.Parameters.AddWithValue("@dureeEnMois", dureeProgrammeTextbox.Text); 
+                                                                                                                                    cmd.ExecuteNonQuery();
+                                                                                                                                    conBD.Close(); 
+                                                                                                                                    effacer_Programme_Formulaire();
                     }
-                }
+
+                    
+
+                   // Charger_programme();
+                    
+
+            }
 
             /// <summary>
             /// Verifier si il y a des excepction de contraites qui n'ont pas ete encore traiter pour le formulaire Ajouter Programme
             /// </summary>
             
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 const string ERREUR_AJOUTER_FORMULAIRE_PROGRAMME = "Erreur!!! Ajouter Programme Contraintes\n";
                 const string UNIQUE_AJOUTER_PROGRAMME_TITLE = "Ajouter Programme erreur";
                 MessageBox.Show($"{ERREUR_AJOUTER_FORMULAIRE_PROGRAMME} {ERREUR_RECOMMANCER_FORMULAIRE}", UNIQUE_AJOUTER_PROGRAMME_TITLE,MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -529,6 +597,24 @@ namespace Stagiaires_College
                 if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaireTextbox.Text) && regPrenomStagiaire.IsMatch(prenomStagiaireTextbox.Text) && dateNaissanceTextbox.Text != string.Empty && sexe!= String.Empty && this.listeViewProgrammes.SelectedItem != null)
                 {
                     stagiaires.Add(new Stagiaire(int.Parse(idStagiareTextbox.Text), nomStagiaireTextbox.Text, prenomStagiaireTextbox.Text, dateNaissanceTextbox.Text, sexe, programmeChoix.GetterId()));
+
+                    conBD.Open();
+
+                    string sql = "INSERT INTO stagiaire(id_stagiaire, nom, prenom, date_naissance, sexe, programme_id) values (@id_stagiaire, @nom, @prenom, @date_naissance, @sexe, @programme_id)";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conBD);
+
+                    cmd.CommandType = CommandType.Text;
+
+                    //Inserer nos valeurs
+                    cmd.Parameters.AddWithValue("@id_stagiaire", idStagiareTextbox.Text);
+                    cmd.Parameters.AddWithValue("@nom", nomStagiaireTextbox.Text);
+                    cmd.Parameters.AddWithValue("@prenom", prenomStagiaireTextbox.Text);
+                    cmd.Parameters.AddWithValue("@date_naissance", dateNaissanceTextbox.Text);
+                    cmd.Parameters.AddWithValue("@sexe", sexe);
+                   cmd.Parameters.AddWithValue("@programme_id", programmeChoix.GetterId());
+                    cmd.ExecuteNonQuery();
+                    conBD.Close();
                     effacer_Stagiaire_Formulaire();
                 }
             }
@@ -539,7 +625,8 @@ namespace Stagiaires_College
             
             catch (Exception ex)
             {
-                 const string ERREUR_AJOUTER_FORMULAIRE_STAGIAIRE = "Erreur!!! Ajouter Stagiaire Contraintes";
+                Console.WriteLine(ex.ToString());
+                const string ERREUR_AJOUTER_FORMULAIRE_STAGIAIRE = "Erreur!!! Ajouter Stagiaire Contraintes";
                     MessageBox.Show(
                     $"{ERREUR_AJOUTER_FORMULAIRE_STAGIAIRE}\n                              {ERREUR_RECOMMANCER_FORMULAIRE}",
                     "Erreur Contraintes Ajouter Stagiaire",
