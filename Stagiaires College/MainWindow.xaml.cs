@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 using MySql.Data.MySqlClient;
 
 namespace Stagiaires_College
@@ -23,82 +22,6 @@ namespace Stagiaires_College
     using System.Runtime.CompilerServices;
     using System.Security.Cryptography.X509Certificates;
     using System.Text.RegularExpressions;
-
-    /// <summary>
-    /// voici la classe Programme qui contient les attribut id, nom, dureeEnMois 
-    /// </summary>
-    public class Programme
-    {
-        public int id { get; set; }
-
-        public string nom { get; set; }
-
-        public int dureeEnMois { get; set; }
-
-        public Programme(int id, string nom, int dureeEnMois)
-        {
-            this.id = id; // 7 chiffres only
-            this.nom = nom; // testing programme name
-            this.dureeEnMois = dureeEnMois; // minimun 1 , maxinmum 60 mois
-        }
-
-        public int GetterId()
-        {
-            return this.id;
-        }
-    }
-
-    /// <summary>
-    /// voici la classe Stagiaire qui contient les attribut id, nom, prenom, date de Naissance, sexe, programme id 
-    /// </summary>
-    public class Stagiaire
-    {
-        public int id { get; set; } // 7 chiffres only
-
-        public string nom { get; set; } // string letters only 
-
-        public string prenom { get; set; } // string letters only
-
-        public string dateNaissance { get; set; } // string letters only
-        public string sexe { get; set; } // only female or only male
-        
-        public int programme_id { get; set; }
-
-        public Stagiaire(int id, string nom, string prenom, string dateNaissance, string sexe, int programme_id)
-        {
-            this.id = id;
-            this.nom = nom;
-            this.prenom = prenom;
-            this.dateNaissance = dateNaissance;
-            this.sexe = sexe;
-            this.programme_id = programme_id;
-        }
-
-        public string GetterId()
-        {
-            return $"{this.id}";
-        }
-        public string GetterPrenom()
-        {
-            return $"{this.prenom}";
-        }
-        public string GetterProgrammePrenom()
-        {
-            return $"{this.prenom}";
-        }
-        public string GetterProgrammeDateNaissance()
-        {
-            return $"{this.dateNaissance}";
-        }
-        public string GetterProgrammeSexe()
-        {
-            return $"{this.sexe}";
-        }
-        public int GetterProgrammeId()
-        {
-            return this.programme_id;
-        }
-    }
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -117,9 +40,7 @@ namespace Stagiaires_College
         /// creer les objets programmes et objects stagiaires pour qu'il reagissent dynamiquement
         /// </summary>
 
-        private ObservableCollection<Programme> programmes = new ObservableCollection<Programme>();
-        private ObservableCollection<Stagiaire> stagiaires = new ObservableCollection<Stagiaire>();
-        private ObservableCollection<Stagiaire> stagiairesSelectionner = new ObservableCollection<Stagiaire>();
+        public string programme_id = "";
 
         public MainWindow()
         {
@@ -146,76 +67,56 @@ namespace Stagiaires_College
             /// </summary>
             
             DataContext = this;
-            
+
             /// <summary>
             /// voici des data dummy ou seed data pour d objet programmes pour tester
             /// </summary>
             
-            programmes.Add(new Programme(9992001, "Math", 60));
-            programmes.Add(new Programme(9992011, "English", 48));
-            programmes.Add(new Programme(9992021, "Spanish", 24));
 
-            /// <summary>
-            /// voici des data dummy ou seed data pour d objet stagiaire pour tester
-            /// </summary>
-            
-           stagiaires.Add(new Stagiaire(9995000, "Jerome", "Miguel", "28/11/2022", "Homme", 9992011));
-            stagiaires.Add(new Stagiaire(9995011, "Jerome", "Danielle", "28/11/2022", "Femme", 9992001));
-            stagiaires.Add(new Stagiaire(9995012, "Jerome", "Daniel", "28/11/2022", "Homme", 9992001));
-            stagiaires.Add(new Stagiaire(9995013, "Jerome", "Maria", "28/11/2022", "Femme", 9992021)); 
-            stagiaires.Add(new Stagiaire(9995014, "Jerome", "Alponse", "28/11/2022", "Homme", 9992001));
-            stagiaires.Add(new Stagiaire(9995015, "Jerome", "Stephanie", "28/11/2022", "Femme", 9992011));
-            stagiaires.Add(new Stagiaire(9995016, "Jerome", "James", "28/11/2022", "Femme", 9992021));
-            stagiaires.Add(new Stagiaire(9995017, "Jerome", "Gabrielle", "28/11/2022", "Femme", 9992011));
-            stagiaires.Add(new Stagiaire(9995018, "Jerome", "George", "28/11/2022", "Femme", 9992001));
-            stagiaires.Add(new Stagiaire(9995019, "Jerome", "Jenifer", "28/11/2022", "Femme", 9992021));
-            stagiaires.Add(new Stagiaire(9995020, "Jerome", "Marc", "28/11/2022", "Homme", 9992001));
-            stagiaires.Add(new Stagiaire(9995021, "Jerome", "Carly", "28/11/2022", "Femme", 9992011));
-            stagiaires.Add(new Stagiaire(9995022, "Igondjo", "Synn Sloan", "28/11/2022", "Homme", 9992021));
+            Charger_programme();
+            Charger_stagiaire();
+        }
 
-            /// <summary>
-            /// faire le data binding pour different listeview avec les programmes et stagiaires
-            /// </summary>
+        private void Charger_programme()
+        {
+            try
+            {
+                conBD.Open();
+                string sqlId = "SELECT * FROM programme";
+                MySqlCommand cmdId = new MySqlCommand(sqlId, conBD);
+                MySqlDataReader drId = cmdId.ExecuteReader();
+                DataTable dataTable = new DataTable();
+                dataTable.Load(drId);
+                this.listeViewProgrammes.ItemsSource = dataTable.DefaultView;
+                this.listViewProgrammeConsulter.ItemsSource = dataTable.DefaultView;
+                drId.Close();
+                conBD.Close();
 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
 
-   /*         
-                        try
-                        {
-                            
-                            string sqlId = "SELECT id FROM programme";
+        private void Charger_stagiaire()
+        {
+            try
+            {
+                conBD.Open();
+                string sqlId = "SELECT * FROM stagiaire";
+                MySqlCommand cmdId = new MySqlCommand(sqlId, conBD);
+                MySqlDataReader drId = cmdId.ExecuteReader();
+                DataTable dataTable = new DataTable();
+                dataTable.Load(drId);
+                drId.Close();
+                conBD.Close();
 
-                            MySqlCommand cmdId = new MySqlCommand(sqlId, conBD);
-                            MySqlDataReader drId = cmdId.ExecuteReader();
-
-                            string sqlNom = "SELECT nom FROM programme";
-
-                            MySqlCommand cmdNom = new MySqlCommand(sqlNom, conBD);
-                            MySqlDataReader drNom = cmdNom.ExecuteReader();
-
-                            string sqlDureeEnMois = "SELECT dureeEnMois FROM programme";
-
-                            MySqlCommand cmdDureeEnMois = new MySqlCommand(sqlDureeEnMois, conBD);
-                            MySqlDataReader drDureeEnMois = cmdDureeEnMois.ExecuteReader();
-
-                            while (drId.Read() )
-                            {
-                                //programmes.Add(new Programme((int)drId[0], (string)drNom[0], (int)drDureeEnMois[0]));
-                                programmes.Add(new Programme(8992021, "Chinese", 11));
-
-                                drId.Close();
-                                drNom.Close();
-                                drDureeEnMois.Close();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.ToString());
-                        }
-     */    
-            this.listeViewProgrammes.ItemsSource = programmes;
-            this.listeViewStagiaires.ItemsSource = stagiairesSelectionner;
-            this.listViewProgrammeConsulter.ItemsSource = programmes;
-
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         /// <summary>
@@ -225,11 +126,12 @@ namespace Stagiaires_College
         private void ajouter_Programme_Click(object sender, RoutedEventArgs e)
         {
             try
-                {
+            {
                     /// <summary>
                     /// Voici les donnees de validation a verifier pour le formulaire Ajouter Programme
                     /// </summary>
-
+                    conBD.Close();
+                    conBD.Open();
                     Regex regNoProgramme = new Regex("^([0-9]){7}$");
                     Regex regNomProgramme = new Regex("^([a-zA-Z][a-zA-Z _]*){1,25}$");
                     Regex regDureeProgramme = new Regex("^([1-9]|[1-5][0-9]|60|all)$");
@@ -239,7 +141,7 @@ namespace Stagiaires_College
                     /// </summary>
 
                     if ((idProgrammesTextbox.Text) == string.Empty)
-                        {
+                    {
                             const string OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE = "Erreur Obligation Data entry ID Programme";
                             const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE =
                                 "Invalide data entry pour ID Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
@@ -249,7 +151,7 @@ namespace Stagiaires_College
                             OBLIGATION_DATA_ENTRY_ID_PROGRAMME_TITLE,
                             MessageBoxButton.OK,
                             MessageBoxImage.Warning);
-                        }
+                    }
 
                     /// <summary>
                     /// Verifier la validation du No du Programme pour le formulaire Ajouter Programme
@@ -274,7 +176,7 @@ namespace Stagiaires_College
                     /// </summary>
                      
                     else if ((nomProgrammeTextbox.Text) == string.Empty)
-                        {
+                    {
                             const string OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE = "Erreur Obligation Data entry nom Programme";
                             const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE =
                                 "Invalide data entry pour nom Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
@@ -284,7 +186,7 @@ namespace Stagiaires_College
                                 OBLIGATION_DATA_ENTRY_NOM_PROGRAMME_TITLE,
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Warning);
-                        }
+                    }
 
                     /// <summary>
                     /// Verifier la validation du nom du Programme pour le formulaire Ajouter Programme
@@ -308,7 +210,7 @@ namespace Stagiaires_College
                     /// </summary>
                      
                     else if ((dureeProgrammeTextbox.Text) == string.Empty)
-                        {
+                    {
                             const string OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE = "Erreur Obligation Data entry duree du Programme";
                             const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE =
                                 "Invalide data entry pour la duree du Programme, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide";
@@ -318,7 +220,7 @@ namespace Stagiaires_College
                                 OBLIGATION_DATA_ENTRY_DUREE_PROGRAMME_TITLE,
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Warning);
-                        }
+                    }
 
                     /// <summary>
                     /// Verifier la validation de la duree du Programme pour le formulaire Ajouter Programme
@@ -342,10 +244,7 @@ namespace Stagiaires_College
                     
                     if (regNoProgramme.IsMatch(idProgrammesTextbox.Text) && regNomProgramme.IsMatch(nomProgrammeTextbox.Text) && regDureeProgramme.IsMatch(dureeProgrammeTextbox.Text))
                     {
-                        programmes.Add(new Programme(int.Parse(idProgrammesTextbox.Text), nomProgrammeTextbox.Text, int.Parse(dureeProgrammeTextbox.Text)));
-
-                        conBD.Open();
-
+                        
                         string sql = "INSERT INTO programme(id, nom, dureeEnMois) values (@id,@nom, @dureeEnMois)";
 
                         MySqlCommand cmd = new MySqlCommand(sql, conBD);
@@ -353,19 +252,14 @@ namespace Stagiaires_College
                         cmd.CommandType = CommandType.Text;
                         
                         //Inserer nos valeurs
-                                                                                                                                    cmd.Parameters.AddWithValue("@id", idProgrammesTextbox.Text);
-                                                                                                                                    cmd.Parameters.AddWithValue("@nom", nomProgrammeTextbox.Text);
-                                                                                                                                    cmd.Parameters.AddWithValue("@dureeEnMois", dureeProgrammeTextbox.Text); 
-                                                                                                                                    cmd.ExecuteNonQuery();
-                                                                                                                                    conBD.Close(); 
-                                                                                                                                    effacer_Programme_Formulaire();
+                        cmd.Parameters.AddWithValue("@id", idProgrammesTextbox.Text);
+                        cmd.Parameters.AddWithValue("@nom", nomProgrammeTextbox.Text);
+                        cmd.Parameters.AddWithValue("@dureeEnMois", dureeProgrammeTextbox.Text); 
+                        cmd.ExecuteNonQuery();
+                        conBD.Close(); 
+                        effacer_Programme_Formulaire();
+                        Charger_programme();
                     }
-
-                    
-
-                   // Charger_programme();
-                    
-
             }
 
             /// <summary>
@@ -375,9 +269,15 @@ namespace Stagiaires_College
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                const string ERREUR_AJOUTER_FORMULAIRE_PROGRAMME = "Erreur!!! Ajouter Programme Contraintes\n";
-                const string UNIQUE_AJOUTER_PROGRAMME_TITLE = "Ajouter Programme erreur";
-                MessageBox.Show($"{ERREUR_AJOUTER_FORMULAIRE_PROGRAMME} {ERREUR_RECOMMANCER_FORMULAIRE}", UNIQUE_AJOUTER_PROGRAMME_TITLE,MessageBoxButton.OK, MessageBoxImage.Warning);
+                const string UNIQUE_NO_DE_PROGRAMME_TITLE = "No de programme erreur existe deja";
+                const string ERREUR_MESSAGE_INPUT_INVALIDE_NO_PROGRAMME =
+                    "Invalide No. de programme, ce numero de programme existe deja, veuillez recommencer le numero de programme";
+
+                MessageBox.Show(
+                    ERREUR_MESSAGE_INPUT_INVALIDE_NO_PROGRAMME,
+                    UNIQUE_NO_DE_PROGRAMME_TITLE,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
             }
         }
 
@@ -410,13 +310,14 @@ namespace Stagiaires_College
                 /// <summary>
                 /// Voici les donnees de validation a verifier pour le formulaire Ajouter Stagiaire
                 /// </summary>
+                conBD.Close();
+                conBD.Open();
 
                 Regex regNoStagiaire = new Regex("^([0-9]){7}$");
                 Regex regNomStagiaire = new Regex("^([a-zA-Z][a-zA-Z _]*){1,25}$");
                 Regex regPrenomStagiaire = new Regex("^([a-zA-Z][a-zA-Z _]*){1,25}$");
                 string sexe = String.Empty;
-                Programme programmeChoix = (Programme)this.listeViewProgrammes.SelectedItem;
-
+                
                 // <summary>
                 /// Verifier la validation de la selecton du programme pour le stagiaire en utilisant le formulaire Ajouter Stagiaire
                 /// </summary>
@@ -559,18 +460,12 @@ namespace Stagiaires_College
                 
                  else if (sexeHommeRadioBox.IsChecked == true)
                 {
-                    //sexe = (sexeHommeRadioBox.IsChecked == true) ? "Homme" : String.Empty;
-                   
-                        sexe = "Homme";
-                 
+                    sexe = "Homme";
                 }
 
                 else if (sexeFemmeRadioBox.IsChecked == true)
                 {
-                   // sexe = (sexeFemmeRadioBox.IsChecked == true) ? "Femme" : String.Empty;
-                  
-                        sexe = "Femme";
-                   
+                    sexe = "Femme";
                 }
 
                 /// <summary>
@@ -593,29 +488,33 @@ namespace Stagiaires_College
                 /// <summary>
                 /// Verifier la validation de tous les inputs pour le formulaire Ajouter Stagiaire
                 /// </summary>
-                
+               
                 if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaireTextbox.Text) && regPrenomStagiaire.IsMatch(prenomStagiaireTextbox.Text) && dateNaissanceTextbox.Text != string.Empty && sexe!= String.Empty && this.listeViewProgrammes.SelectedItem != null)
                 {
-                    stagiaires.Add(new Stagiaire(int.Parse(idStagiareTextbox.Text), nomStagiaireTextbox.Text, prenomStagiaireTextbox.Text, dateNaissanceTextbox.Text, sexe, programmeChoix.GetterId()));
 
-                    conBD.Open();
+                    /// new line sql
+                    
+                    //// new sql
+                  
+                        string sql2 =
+                            "INSERT INTO stagiaire(id_stagiaire, nom, prenom, date_naissance, sexe, programme_id) values (@id_stagiaire, @nom, @prenom, @date_naissance, @sexe, @programme_id)";
 
-                    string sql = "INSERT INTO stagiaire(id_stagiaire, nom, prenom, date_naissance, sexe, programme_id) values (@id_stagiaire, @nom, @prenom, @date_naissance, @sexe, @programme_id)";
+                        MySqlCommand cmd2 = new MySqlCommand(sql2, conBD);
 
-                    MySqlCommand cmd = new MySqlCommand(sql, conBD);
+                        cmd2.CommandType = CommandType.Text;
 
-                    cmd.CommandType = CommandType.Text;
-
-                    //Inserer nos valeurs
-                    cmd.Parameters.AddWithValue("@id_stagiaire", idStagiareTextbox.Text);
-                    cmd.Parameters.AddWithValue("@nom", nomStagiaireTextbox.Text);
-                    cmd.Parameters.AddWithValue("@prenom", prenomStagiaireTextbox.Text);
-                    cmd.Parameters.AddWithValue("@date_naissance", dateNaissanceTextbox.Text);
-                    cmd.Parameters.AddWithValue("@sexe", sexe);
-                   cmd.Parameters.AddWithValue("@programme_id", programmeChoix.GetterId());
-                    cmd.ExecuteNonQuery();
-                    conBD.Close();
+                        //Inserer nos valeurs
+                        cmd2.Parameters.AddWithValue("@id_stagiaire", idStagiareTextbox.Text);
+                        cmd2.Parameters.AddWithValue("@nom", nomStagiaireTextbox.Text);
+                        cmd2.Parameters.AddWithValue("@prenom", prenomStagiaireTextbox.Text);
+                        cmd2.Parameters.AddWithValue("@date_naissance", dateNaissanceTextbox.Text);
+                        cmd2.Parameters.AddWithValue("@sexe", sexe);
+                        cmd2.Parameters.AddWithValue("@programme_id", programmeIdStagiaireTextbox.Text);
+                        cmd2.ExecuteNonQuery();
+                        conBD.Close();
+                    
                     effacer_Stagiaire_Formulaire();
+                    Charger_stagiaire();
                 }
             }
 
@@ -626,10 +525,13 @@ namespace Stagiaires_College
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                const string ERREUR_AJOUTER_FORMULAIRE_STAGIAIRE = "Erreur!!! Ajouter Stagiaire Contraintes";
-                    MessageBox.Show(
-                    $"{ERREUR_AJOUTER_FORMULAIRE_STAGIAIRE}\n                              {ERREUR_RECOMMANCER_FORMULAIRE}",
-                    "Erreur Contraintes Ajouter Stagiaire",
+                const string UNIQUE_NO_DE_STAGIAIRE_TITLE = "No de stagiaire erreur existe deja";
+                const string ERREUR_MESSAGE_INPUT_INVALIDE_NO_STAGIAIRE =
+                    "Invalide No. de programme, ce numero de stagiaire existe deja, veuillez recommencer le numero stagiaire ";
+
+                MessageBox.Show(
+                    ERREUR_MESSAGE_INPUT_INVALIDE_NO_STAGIAIRE,
+                    UNIQUE_NO_DE_STAGIAIRE_TITLE,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
             }
@@ -654,49 +556,54 @@ namespace Stagiaires_College
             dateNaissanceTextbox.Text = string.Empty;
             sexeHommeRadioBox.IsChecked = false;
             sexeFemmeRadioBox.IsChecked = false;
+            programmeIdStagiaireTextbox.Clear();
             listeViewProgrammes.SelectedItem = null;
         }
 
-        private void AfficherProgrammeStagiaires_OnClick(object sender, RoutedEventArgs e)
+        private void ListeViewProgrammes_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /// <summary>
-            /// Verifier la validation si il y a aucun Programme selectionner a partir de la List View Programme Consulter
-            /// </summary>
 
-            Programme programmeChoix = (Programme)this.listViewProgrammeConsulter.SelectedItem;
+            DataRowView ligne_selectionnee = ((DataRowView)((ListView)sender).SelectedItem) as DataRowView;
 
-            /// <summary>
-            /// effacer toute les donnees de la ObservableCollection<Stagiaire> stagiairesSelectionner
-            /// </summary>
-            this.stagiairesSelectionner.Clear();
-
-            if (listViewProgrammeConsulter.SelectedItem == null)
+            if (ligne_selectionnee != null)
             {
-                const string ERREUR_PROGRAMME_CHOIX_STAGIAIRE_TITLE = $"Erreur Obligation selection d'un programme pour Stagiaire";
-                const string ERREUR_MESSAGE_INPUT_INVALIDE_PROGRAMME_CHOIX_STAGIAIRE =
-                    "Invalide selection d'un programme pour le Stagiaire, obligation de suivre les restrictions de ce champ parce qu'en ce moment il est vide, vous devez en selectionner un programme";
-
-                MessageBox.Show(
-                    ERREUR_MESSAGE_INPUT_INVALIDE_PROGRAMME_CHOIX_STAGIAIRE,
-                    ERREUR_PROGRAMME_CHOIX_STAGIAIRE_TITLE,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-            }
-
-            // <summary>
-            /// Verifier la validation de la selecton du programme pour afficher tous les stagiaires incrit a ce programme en utilisant la list view Programme consulter
-            /// </summary>
-
-            else if (listViewProgrammeConsulter.SelectedItem != null)
-            {
-                foreach (var VARIABLE in this.stagiaires)
-                {
-                    if (programmeChoix.GetterId() == VARIABLE.GetterProgrammeId())
-                        {
-                            stagiairesSelectionner.Add(new Stagiaire(VARIABLE.id, VARIABLE.nom, VARIABLE.prenom, VARIABLE.dateNaissance, VARIABLE.sexe, VARIABLE.GetterProgrammeId()));
-                        }
-                }
+                //cbxGroupe.Text = ligne_selectionnee["num_groupe"].ToString();
+                programmeIdStagiaireTextbox.Text = ligne_selectionnee["id"].ToString();
             }
         }
+
+        private void ListViewProgrammeConsulter_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataRowView ligne_selectionnee = ((DataRowView)((ListView)sender).SelectedItem) as DataRowView;
+
+            if (ligne_selectionnee != null)
+            {
+                programmeIdStagiaireConsulterTextbox.Text = ligne_selectionnee["id"].ToString();
+
+                try
+                {
+                    conBD.Open();
+
+                    string sql = "SELECT * FROM stagiaire WHERE programme_id = " + ligne_selectionnee["id"].ToString();
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conBD);
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    DataTable dataTable = new DataTable();
+                    dataTable.Load(dr);
+
+                    dr.Close();
+                    conBD.Close();
+
+                    this.listeViewStagiaires.ItemsSource = dataTable.DefaultView;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+
+        }
+
     }
 }

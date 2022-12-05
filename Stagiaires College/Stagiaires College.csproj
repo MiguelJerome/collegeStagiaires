@@ -22,4 +22,10 @@
     <PackageReference Include="MySql.Data" Version="8.0.31" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MySQL\Connexion\" />
+    <Folder Include="MySQL\Seed data\Stagiaire\" />
+    <Folder Include="MySQL\Seed data\Programme\" />
+  </ItemGroup>
+
 </Project>

@@ -37,7 +37,7 @@
                     <Label x:Name="idProgrammeLabel" 
                                         Content="Numéro Du Programme:(7 chiffres uniquement)*"
                                         HorizontalAlignment="Left" 
-                                        Margin="67,72,0,0" 
+                                        Margin="67,71,0,0" 
                                         VerticalAlignment="Top" 
                                         Width="520" 
                                         FontSize="22" 
@@ -82,7 +82,7 @@
                     <TextBox x:Name="nomProgrammeTextbox" 
                              Text="{Binding Path=Text}" 
                              HorizontalAlignment="Left" 
-                             Margin="500,114,0,0" 
+                             Margin="500,119,0,0" 
                              TextWrapping="Wrap"  
                              VerticalAlignment="Top" 
                              Width="422" 
@@ -117,7 +117,7 @@
                     <TextBox x:Name="dureeProgrammeTextbox" 
                              Text="{Binding Path=Text}" 
                              HorizontalAlignment="Left" 
-                             Margin="500,157,0,0" 
+                             Margin="500,159,0,0" 
                              TextWrapping="Wrap"  
                              VerticalAlignment="Top" 
                              Width="422" 
@@ -150,7 +150,7 @@
                                          Grid.ColumnSpan="3"
                                          Click ="ajouter_Programme_Click" 
                                          Background="#FF01DDDD" 
-                                         Foreground="White"/>
+                                         Foreground="Black"/>
                     <!--ceci est le bouton de effacer les donnee de TextBox d'un programme a partir du formulaire ajouter programme de l'onglet Programme-->
                     <Button x:Name="effacerProgramme" 
                                         Content="Effacer Programme" 
@@ -164,7 +164,7 @@
                                         Grid.ColumnSpan="3"
                                         Click="effacer_Programme_Click" 
                                         Background="#FF01DDDD" 
-                                        Foreground="White"/>
+                                        Foreground="Black"/>
                     
                 </Grid>
             </TabItem>
@@ -181,7 +181,7 @@
                     <Label x:Name="idEtudiantLabel"
                            Content="Numéro D'étudiant:(7 chiffres uniquement)*" 
                            HorizontalAlignment="Left" 
-                           Margin="67,72,0,0" 
+                           Margin="67,71,0,0" 
                            VerticalAlignment="Top" 
                            Width="522" 
                            FontSize="22" 
@@ -211,7 +211,7 @@
                     <Label x:Name="nomEtudiantLabel"
                            Content="Nom De l'étudiant:(entre 1 et 25 characteres)*" 
                            HorizontalAlignment="Left" 
-                           Margin="67,112,0,0" 
+                           Margin="67,111,0,0" 
                            VerticalAlignment="Top" 
                            Width="522" 
                            FontSize="22" 
@@ -242,7 +242,7 @@
                     <Label x:Name="prenonStagiaireLabel"
                            Content="Prénom De l'étudiant:(entre 1 et 25 characteres)*" 
                            HorizontalAlignment="Left" 
-                           Margin="67,152,0,0" 
+                           Margin="67,149,0,0" 
                            VerticalAlignment="Top" 
                            Width="522" 
                            FontSize="22" 
@@ -274,7 +274,7 @@
                     <Label x:Name="dateNaissanceLabel"
                            Content="Date De Naissance:(dd/mm/yyyy)*"
                            HorizontalAlignment="Left" 
-                           Margin="67,191,0,0" 
+                           Margin="67,189,0,0" 
                            VerticalAlignment="Top" 
                            Width="522" 
                            FontSize="22" 
@@ -357,6 +357,39 @@
                                     Foreground="#FFD6B60A"/>
                         </StackPanel>
                     </RadioButton>
+                    <!--ceci est le Label et le TextBox Numero de Programme pour l'etudiant pour le formulaire ajouter Stagiaire de l'onglet Stagiaire-->
+                    <Label x:Name="programmeIdStagiaireLabel"
+                           Content="Numéro Du Programme Selectionner:" 
+                           HorizontalAlignment="Left" 
+                           Margin="67,274,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="522" 
+                           FontSize="22" 
+                           Height="40"
+                           Foreground="#FFD6B60A"/>
+                    <TextBox x:Name="programmeIdStagiaireTextbox" 
+                             HorizontalAlignment="Left" 
+                             Margin="650,281,0,0" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Top" 
+                             Width="422" 
+                             Height="28" 
+                             FontSize="22" 
+                             TextDecorations="{x:Null}" 
+                             FontWeight="Normal" 
+                             FontStyle="Normal" 
+                             Visibility="Visible"
+                             SpellCheck.IsEnabled="True" 
+                             InputScope="Default"
+                             Background="#feabe6"
+                             Foreground="black"
+                             BorderBrush="#92baf4"
+                             BorderThickness =" 2" 
+                             IsEnabled="False">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
 
                     <!--ceci est pour visualiser les programmes de la ListView d'un programme a partir du formulaire ajouter Stagiaire de l'onglet Stagiaire-->
                     <ListView Margin="67,323,67,124" 
@@ -365,7 +398,8 @@
                               Background="#feabe6"
                               Foreground="black"
                               BorderBrush="#92baf4"
-                              BorderThickness =" 3">
+                              BorderThickness =" 3"
+                              SelectionChanged="ListeViewProgrammes_OnSelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Numero Cours" 
@@ -393,7 +427,7 @@
                             RenderTransformOrigin="0.498,6.374"
                             Click ="effacer_Stagiaire_Click" 
                             Background="#FF01DDDD" 
-                            Foreground="White"/>
+                            Foreground="black"/>
                     <!--ceci est le bouton de ajouter un Stagiaire a partir du formulaire ajouter Stagiaire de l'onglet Stagiaire-->
                     <Button x:Name="ajouterStagiaire" 
                             Content="Ajouter Stagiaire" 
@@ -407,7 +441,7 @@
                             RenderTransformOrigin="0.498,6.374"
                             Click="ajouter_Stagiaire_Click" 
                             Background="#FF01DDDD" 
-                            Foreground="White"/>
+                            Foreground="black"/>
                 </Grid>
             </TabItem>
             <!--Voici l'onglet Consulter pour consulter la liste de Stagiaire par programme -->
@@ -427,44 +461,66 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
+
+                    <!--ceci est le Label et le TextBox Numero de Programme pour l'etudiant pour la liste view stagiaire de l'onglet Consulter-->
+                    <Label x:Name="programmeIdStagiaireConsulterLabel"
+                           Content="Numéro Du Programme Selectionner:" 
+                           HorizontalAlignment="Left" 
+                           Margin="34,3,0,0" 
+                           VerticalAlignment="Top" 
+                           Width="522" 
+                           FontSize="22" 
+                           Height="40"
+                           Foreground="#FFD6B60A"/>
+                    <TextBox x:Name="programmeIdStagiaireConsulterTextbox" 
+                             HorizontalAlignment="Left" 
+                             Margin="650,10,0,0" 
+                             TextWrapping="Wrap" 
+                             VerticalAlignment="Top" 
+                             Width="422" 
+                             Height="28" 
+                             FontSize="22" 
+                             TextDecorations="{x:Null}" 
+                             FontWeight="Normal" 
+                             FontStyle="Normal" 
+                             Visibility="Visible"
+                             SpellCheck.IsEnabled="True" 
+                             InputScope="Default"
+                             Background="#feabe6"
+                             Foreground="black"
+                             BorderBrush="#92baf4"
+                             BorderThickness =" 2" 
+                             IsEnabled="False">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
                     <!--ceci est pour visualiser les programmes avec cette ListView pour selectionner un programme et pour voir la liste de stagiaire qui appartient a ce programme a partir de l'onglet Consulter-->
                     <ListView x:Name="listViewProgrammeConsulter" 
                               Margin="34,47,0,459"
                               Background="#feabe6"
                               Foreground="black"
-                              Width="1076">
+                              Width="1076"
+                              SelectionChanged="ListViewProgrammeConsulter_OnSelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="No. Programmes" 
                                                 DisplayMemberBinding="{Binding id}"  
-                                                Width="302"/>
+                                                Width="292"/>
                                 <GridViewColumn Header="Nom" 
                                                 DisplayMemberBinding="{Binding nom}"  
                                                 Width="552"/>
                                 <GridViewColumn Header="Duree En Mois" 
                                                 DisplayMemberBinding="{Binding dureeEnMois}" 
-                                                Width="210"/>
+                                                Width="200"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <!--ceci est le bouton afficher tous les Stagiaires d un programme selectionner a partir de l'onglet Consulter-->
-                    <Button x:Name="chercherProgrammeStagiaires" 
-                            Content="Afficher Tous Les Stagiaires" 
-                            HorizontalAlignment="Center" 
-                            Margin="0,285,0,0" 
-                            VerticalAlignment="Top" 
-                            Height="35" 
-                            Width="760" 
-                            FontSize="22" 
-                            FontWeight="Bold"
-                            RenderTransformOrigin="0.498,6.374"
-                            Background="#FF01DDDD" 
-                            Foreground="White"
-                            Click="AfficherProgrammeStagiaires_OnClick"/>
+                    
                     <!--ceci est le label liste des stagiaires pour consulter la liste de Stagiaire par programme-->
                     <Label Content="Liste des stagiaires:" 
                            HorizontalAlignment="Left" 
-                           Margin="34,320,0,0" 
+                           Margin="34,330,0,0" 
                            VerticalAlignment="Top" 
                            Width="333" 
                            FontSize="22" 
@@ -483,13 +539,13 @@
                                BorderThickness =" 3">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="No. Stagiaires" DisplayMemberBinding="{Binding id}"
+                                <GridViewColumn Header="No. Stagiaires" DisplayMemberBinding="{Binding id_stagiaire}"
                                                 Width="160"/>
                                 <GridViewColumn Header="Nom" DisplayMemberBinding="{Binding nom}"  
-                                                Width="200"/>
+                                                Width="300"/>
                                 <GridViewColumn Header="Prenom" DisplayMemberBinding="{Binding prenom}" 
-                                                Width="200"/>
-                                <GridViewColumn Header="Date de naissance" DisplayMemberBinding="{Binding dateNaissance}" 
+                                                Width="300"/>
+                                <GridViewColumn Header="Date de naissance" DisplayMemberBinding="{Binding date_naissance}" 
                                                 Width="200"/>
                                 <GridViewColumn Header="Sexe" DisplayMemberBinding="{Binding sexe}" 
                                                 Width="100"/>
