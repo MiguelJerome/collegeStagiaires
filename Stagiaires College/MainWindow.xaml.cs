@@ -70,7 +70,7 @@ namespace Stagiaires_College
             /// </summary>
             
             DataContext = this;
-            dateNaissanceTextbox.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddDays(1), DateTime.Now.AddDays(7)));
+
             /// <summary>
             /// appeller la fonction charger la table programme et aussi charger la table stagiaire
             /// </summary>
@@ -89,7 +89,6 @@ namespace Stagiaires_College
             try
             {
                 
-
                 conBD.Open();
                 string sqlId = "SELECT * FROM programme";
                 MySqlCommand cmdId = new MySqlCommand(sqlId, conBD);
@@ -510,7 +509,7 @@ namespace Stagiaires_College
                 /// Verifier la validation si date de naissance Stagiaire TextBox est vide
                 /// </summary>
                 
-                else if ((dateNaissanceTextbox.Text) == string.Empty)
+                else if ((dateNaissanceDatePicker.Text) == string.Empty)
                 {
                     const string OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE_TITLE = "Erreur Obligation Data entry date de naissance Stagiaire";
                     const string ERREUR_MESSAGE_INPUT_OBLIGATION_DATA_ENTRY_DATE_NAISSANCE_STAGIAIRE =
@@ -558,7 +557,7 @@ namespace Stagiaires_College
                 /// Verifier la validation de tous les inputs pour le formulaire Ajouter Stagiaire
                 /// </summary>
                
-                if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaireTextbox.Text) && regPrenomStagiaire.IsMatch(prenomStagiaireTextbox.Text) && dateNaissanceTextbox.Text != string.Empty && sexe!= String.Empty && this.listeViewProgrammes.SelectedItem != null)
+                if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaireTextbox.Text) && regPrenomStagiaire.IsMatch(prenomStagiaireTextbox.Text) && dateNaissanceDatePicker.Text != string.Empty && sexe!= String.Empty && this.listeViewProgrammes.SelectedItem != null)
                 {
 
                     /// <summary>
@@ -576,7 +575,7 @@ namespace Stagiaires_College
                         cmd2.Parameters.AddWithValue("@id_stagiaire", idStagiareTextbox.Text);
                         cmd2.Parameters.AddWithValue("@nom", nomStagiaireTextbox.Text);
                         cmd2.Parameters.AddWithValue("@prenom", prenomStagiaireTextbox.Text);
-                        cmd2.Parameters.AddWithValue("@date_naissance", dateNaissanceTextbox.Text);
+                        cmd2.Parameters.AddWithValue("@date_naissance", dateNaissanceDatePicker.Text);
                         cmd2.Parameters.AddWithValue("@sexe", sexe);
                         cmd2.Parameters.AddWithValue("@programme_id", programmeIdStagiaireTextbox.Text);
                         cmd2.ExecuteNonQuery();
@@ -631,7 +630,7 @@ namespace Stagiaires_College
             idStagiareTextbox.Text = string.Empty;
             nomStagiaireTextbox.Text = string.Empty;
             prenomStagiaireTextbox.Text = string.Empty;
-            dateNaissanceTextbox.Text = string.Empty;
+            dateNaissanceDatePicker.Text = string.Empty;
             sexeHommeRadioBox.IsChecked = false;
             sexeFemmeRadioBox.IsChecked = false;
             programmeIdStagiaireTextbox.Clear();

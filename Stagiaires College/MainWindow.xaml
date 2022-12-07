@@ -280,7 +280,7 @@
                            FontSize="22" 
                            Height="40"
                            Foreground="#FFD6B60A"/>
-                    <DatePicker x:Name="dateNaissanceTextbox" 
+                    <DatePicker x:Name="dateNaissanceDatePicker" 
                              HorizontalAlignment="Left" 
                              Margin="650,196,0,0" 
                              VerticalAlignment="Top" 
@@ -295,6 +295,9 @@
                              Foreground="black"
                              BorderBrush="#92baf4"
                              BorderThickness =" 0">
+                        <DatePicker.BlackoutDates>
+                            <CalendarDateRange Start = "12-07-2022" />
+                        </DatePicker.BlackoutDates>
                     </DatePicker>
                     <!--ceci est le Label e sexe etudiant pour le formulaire ajouter Stagiaire de l'onglet Stagiaire-->
                     <Label x:Name="sexeEtudiantLabel"
