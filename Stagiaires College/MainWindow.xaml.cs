@@ -20,6 +20,7 @@ namespace Stagiaires_College
     using System.Data;
     using System.Diagnostics.Eventing.Reader;
     using System.Runtime.CompilerServices;
+    using System.Runtime.Intrinsics.Arm;
     using System.Security.Cryptography.X509Certificates;
     using System.Text.RegularExpressions;
 
@@ -34,14 +35,13 @@ namespace Stagiaires_College
         
         private string ERREUR_RECOMMANCER_FORMULAIRE = "Veuillez recommencer";
 
-        private MySqlConnection conBD;
-
         /// <summary>
-        /// creer les objets programmes et objects stagiaires pour qu'il reagissent dynamiquement
+        /// creer un objet MySql pour permettre d'avoir une connextion MySql
         /// </summary>
 
-        public string programme_id = "";
+        private MySqlConnection conBD;
 
+        
         public MainWindow()
         {
             /// <summary>
@@ -50,10 +50,12 @@ namespace Stagiaires_College
             
             InitializeComponent();
 
-            conBD = new MySqlConnection("Server=localhost;Uid=root;Pwd=;database=college_stagiaire");
-           // Charger_programme();
-           // Charger_stagiaires();
+            /// <summary>
+            /// associcier les settings a l'objet MySql object pour permettre d'avoir une connextion MySql
+            /// </summary>
 
+            conBD = new MySqlConnection("Server=localhost;Uid=root;Pwd=;database=college_stagiaire");
+            
             /// <summary>
             /// la fenêtre ne peut pas modifier sa grosseur
             /// la fenêtre est centrer a l'ecran
@@ -62,25 +64,32 @@ namespace Stagiaires_College
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize;
 
+
             /// <summary>
             /// on bind avec DataContext avec le programmes et le stagiaires
             /// </summary>
             
             DataContext = this;
-
+            dateNaissanceTextbox.BlackoutDates.Add(new CalendarDateRange(DateTime.Now.AddDays(1), DateTime.Now.AddDays(7)));
             /// <summary>
-            /// voici des data dummy ou seed data pour d objet programmes pour tester
+            /// appeller la fonction charger la table programme et aussi charger la table stagiaire
             /// </summary>
-            
 
             Charger_programme();
             Charger_stagiaire();
         }
 
+
+        /// <summary>
+        /// Ouvrez une connexion à une base de données et lisez-la à partir d'un programme de table de base de données, puis chargez la dataTable dans la vue de la liste Programmes et dans la vue de liste Programme Consulter
+        /// </summary>
+        
         private void Charger_programme()
         {
             try
             {
+                
+
                 conBD.Open();
                 string sqlId = "SELECT * FROM programme";
                 MySqlCommand cmdId = new MySqlCommand(sqlId, conBD);
@@ -89,10 +98,25 @@ namespace Stagiaires_College
                 dataTable.Load(drId);
                 this.listeViewProgrammes.ItemsSource = dataTable.DefaultView;
                 this.listViewProgrammeConsulter.ItemsSource = dataTable.DefaultView;
+
+                /// <summary>
+                /// Vous devez appeler explicitement la méthode Close lorsque vous avez fini d'utiliser SqlDataReader
+                /// </summary>
+                
                 drId.Close();
+
+                /// <summary>
+                /// close MySql database connection
+                /// </summary>
+                
                 conBD.Close();
 
             }
+
+            /// <summary>
+            /// Verifier si il y a des excepction de contraites qui n'ont pas ete encore traiter pour Charger la table Programme
+            /// </summary>
+            
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
@@ -103,16 +127,36 @@ namespace Stagiaires_College
         {
             try
             {
+                /// <summary>
+                /// Ouvrez une connexion à une base de données et lisez-la à partir d'un Stagiaire de table de base de données, puis chargez la dataTable 
+                /// </summary>
+                
                 conBD.Open();
                 string sqlId = "SELECT * FROM stagiaire";
                 MySqlCommand cmdId = new MySqlCommand(sqlId, conBD);
                 MySqlDataReader drId = cmdId.ExecuteReader();
                 DataTable dataTable = new DataTable();
                 dataTable.Load(drId);
+
+
+                /// <summary>
+                /// Vous devez appeler explicitement la méthode Close lorsque vous avez fini d'utiliser SqlDataReader
+                /// </summary>
+                
                 drId.Close();
+
+                /// <summary>
+                /// close MySql database connection
+                /// </summary>
+
                 conBD.Close();
 
             }
+
+            /// <summary>
+            /// Verifier si il y a des excepction de contraites qui n'ont pas ete encore traiter pour Charger la table Stagiaire
+            /// </summary>
+            
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
@@ -127,11 +171,18 @@ namespace Stagiaires_College
         {
             try
             {
+                
+
                     /// <summary>
-                    /// Voici les donnees de validation a verifier pour le formulaire Ajouter Programme
+                    /// close et ouvert MySql database connextion
                     /// </summary>
                     conBD.Close();
                     conBD.Open();
+
+                    /// <summary>
+                    /// Voici les donnees de validation a verifier pour le formulaire Ajouter Programme
+                    /// </summary>
+
                     Regex regNoProgramme = new Regex("^([0-9]){7}$");
                     Regex regNomProgramme = new Regex("^([a-zA-Z][a-zA-Z _]*){1,25}$");
                     Regex regDureeProgramme = new Regex("^([1-9]|[1-5][0-9]|60|all)$");
@@ -244,7 +295,10 @@ namespace Stagiaires_College
                     
                     if (regNoProgramme.IsMatch(idProgrammesTextbox.Text) && regNomProgramme.IsMatch(nomProgrammeTextbox.Text) && regDureeProgramme.IsMatch(dureeProgrammeTextbox.Text))
                     {
-                        
+                        /// <summary>
+                        /// ajouter un programme dans la Table Programme de MySql
+                        /// </summary>
+
                         string sql = "INSERT INTO programme(id, nom, dureeEnMois) values (@id,@nom, @dureeEnMois)";
 
                         MySqlCommand cmd = new MySqlCommand(sql, conBD);
@@ -256,8 +310,23 @@ namespace Stagiaires_College
                         cmd.Parameters.AddWithValue("@nom", nomProgrammeTextbox.Text);
                         cmd.Parameters.AddWithValue("@dureeEnMois", dureeProgrammeTextbox.Text); 
                         cmd.ExecuteNonQuery();
-                        conBD.Close(); 
+
+
+                        /// <summary>
+                        /// close MySql database connection
+                        /// </summary>
+                        conBD.Close();
+
+                        /// <summary>
+                        /// effacer le formulaire Programme
+                        /// </summary>
+                        
                         effacer_Programme_Formulaire();
+
+                        /// <summary>
+                        /// appeler la fonction charger la table programme 
+                        /// </summary>
+                        
                         Charger_programme();
                     }
             }
@@ -492,10 +561,10 @@ namespace Stagiaires_College
                 if (regNoStagiaire.IsMatch(idStagiareTextbox.Text) && regNomStagiaire.IsMatch(nomStagiaireTextbox.Text) && regPrenomStagiaire.IsMatch(prenomStagiaireTextbox.Text) && dateNaissanceTextbox.Text != string.Empty && sexe!= String.Empty && this.listeViewProgrammes.SelectedItem != null)
                 {
 
-                    /// new line sql
-                    
-                    //// new sql
-                  
+                    /// <summary>
+                    /// ajouter un programme dans la Table Stagiaire de MySql
+                    /// </summary>
+
                         string sql2 =
                             "INSERT INTO stagiaire(id_stagiaire, nom, prenom, date_naissance, sexe, programme_id) values (@id_stagiaire, @nom, @prenom, @date_naissance, @sexe, @programme_id)";
 
@@ -512,8 +581,17 @@ namespace Stagiaires_College
                         cmd2.Parameters.AddWithValue("@programme_id", programmeIdStagiaireTextbox.Text);
                         cmd2.ExecuteNonQuery();
                         conBD.Close();
+
+                    /// <summary>
+                    /// effacer le formulaire Programme
+                    /// </summary>
                     
                     effacer_Stagiaire_Formulaire();
+
+                    /// <summary>
+                    /// appeler la fonction charger la table programme 
+                    /// </summary>
+                    
                     Charger_stagiaire();
                 }
             }
@@ -560,6 +638,9 @@ namespace Stagiaires_College
             listeViewProgrammes.SelectedItem = null;
         }
 
+        /// <summary>
+        /// permet de selectionner un programme a l'aide son id de la liste view Programme et de faire la mise a jour dynamiquement a partir de la liste view Programme
+        /// </summary>
         private void ListeViewProgrammes_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -572,6 +653,10 @@ namespace Stagiaires_College
             }
         }
 
+        /// <summary>
+        /// permet de selectionner un programme a l'aide son id de la liste view Programme et de faire la mise a jour dynamiquement a partir de la liste view Programme
+        /// et par la suite nous montrer de facon dynamiquem tous les statgiaires du Programme selectionner dans la liste view Stagiaire 
+        /// </summary>
         private void ListViewProgrammeConsulter_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DataRowView ligne_selectionnee = ((DataRowView)((ListView)sender).SelectedItem) as DataRowView;

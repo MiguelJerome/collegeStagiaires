@@ -272,7 +272,7 @@
                     </TextBox>
                     <!--ceci est le Label et le TextBox date naissance etudiant pour le formulaire ajouter Stagiaire de l'onglet Stagiaire-->
                     <Label x:Name="dateNaissanceLabel"
-                           Content="Date De Naissance:(dd/mm/yyyy)*"
+                           Content="Date De Naissance:(mm/dd/yyyy)*"
                            HorizontalAlignment="Left" 
                            Margin="67,189,0,0" 
                            VerticalAlignment="Top" 
